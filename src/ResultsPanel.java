@@ -16,10 +16,17 @@ public class ResultsPanel extends JPanel implements VisibleManager{
 	private JLabel labelTempMaxima;
 	private JLabel labelTempDeCorte;
 	private JLabel labelTempFinal;
+	private JLabel labelTiempUP;
+	private JLabel labelTiempTotal;
+	private JLabel labelUP;
+	
 	private JTextField fieldTempInicial;
 	private JTextField fieldTempMaxima;
 	private JTextField fieldTempDeCorte;
 	private JTextField fieldTempFinal;
+	private JTextField fieldTiempUP;
+	private JTextField fieldTiempTotal;
+	private JTextField fieldUP;
 	
 	private JButton okBtn;
 	
@@ -38,11 +45,23 @@ public class ResultsPanel extends JPanel implements VisibleManager{
 		
 		labelTempDeCorte = new JLabel("Temperatura de corte: ");
 		fieldTempDeCorte = new JTextField(4);
-		fieldTempDeCorte.setEditable(false);
+		fieldTempDeCorte.setEditable(true);
 		
 		labelTempFinal = new JLabel("Temperatura final: ");
 		fieldTempFinal = new JTextField(4);
 		fieldTempFinal.setEditable(false);
+		
+		labelTiempUP = new JLabel("Tiempo UP: ");
+		fieldTiempUP = new JTextField(4);
+		fieldTiempUP.setEditable(false);
+		
+		labelTiempTotal = new JLabel("Tiempo total: ");
+		fieldTiempTotal = new JTextField(4);
+		fieldTiempTotal.setEditable(false);
+		
+		labelUP = new JLabel("UP: ");
+		fieldUP = new JTextField(4);
+		fieldUP.setEditable(false);
 		
 		okBtn = new JButton("Calcular");
 		Border innerBorder = BorderFactory.createTitledBorder("Resultados del proceso");
@@ -77,13 +96,13 @@ public class ResultsPanel extends JPanel implements VisibleManager{
 		gc.gridx = 0;
 		gc.insets = new Insets(0, 0, 0, 5);
 		gc.anchor = GridBagConstraints.LINE_END;
-		add(labelTempDeCorte,gc);
+		add(labelTempFinal,gc);
 		
 		gc.gridx = 1;
 		gc.gridy = 1;
 		gc.insets = new Insets(0, 0, 0, 0);
 		gc.anchor = GridBagConstraints.LINE_START;
-		add(fieldTempDeCorte,gc);
+		add(fieldTempFinal,gc);
 
 		////////////////////Third Row	
 		gc.weightx = 1;
@@ -109,19 +128,67 @@ public class ResultsPanel extends JPanel implements VisibleManager{
 		gc.gridx = 0;
 		gc.insets = new Insets(0, 0, 0, 5);
 		gc.anchor = GridBagConstraints.LINE_END;
-		add(labelTempFinal,gc);
+		add(labelTiempTotal,gc);
 		
 		gc.gridx = 1;
 		gc.gridy = 3;
 		gc.insets = new Insets(0, 0, 0, 0);
 		gc.anchor = GridBagConstraints.LINE_START;
-		add(fieldTempFinal,gc);		
+		add(fieldTiempTotal,gc);		
 		
 		////////////////////Fifth row
 		gc.weightx = 1;
-		gc.weighty = 2.0;
+		gc.weighty = 0.1;
 		
 		gc.gridy = 4;
+		gc.gridx = 0;
+		gc.insets = new Insets(0, 0, 0, 5);
+		gc.anchor = GridBagConstraints.LINE_END;
+		add(labelTempDeCorte,gc);
+		
+		gc.gridx = 1;
+		gc.gridy = 4;
+		gc.insets = new Insets(0, 0, 0, 0);
+		gc.anchor = GridBagConstraints.LINE_START;
+		add(fieldTempDeCorte,gc);
+		
+		////////////////////Sixth row
+		gc.weightx = 1;
+		gc.weighty = 0.1;
+		
+		gc.gridy = 5;
+		gc.gridx = 0;
+		gc.insets = new Insets(0, 0, 0, 5);
+		gc.anchor = GridBagConstraints.LINE_END;
+		add(labelTiempUP,gc);
+		
+		gc.gridx = 1;
+		gc.gridy = 5;
+		gc.insets = new Insets(0, 0, 0, 0);
+		gc.anchor = GridBagConstraints.LINE_START;
+		add(fieldTiempUP,gc);
+		
+		////////////////////Seventh row
+		gc.weightx = 1;
+		gc.weighty = 0.1;
+		
+		gc.gridy = 6;
+		gc.gridx = 0;
+		gc.insets = new Insets(0, 0, 0, 5);
+		gc.anchor = GridBagConstraints.LINE_END;
+		add(labelUP,gc);
+		
+		gc.gridx = 1;
+		gc.gridy = 6;
+		gc.insets = new Insets(0, 0, 0, 0);
+		gc.anchor = GridBagConstraints.LINE_START;
+		add(fieldUP,gc);
+
+		////////////////////Eighth row
+		gc.weightx = 1;
+		gc.weighty = 2.0;
+		
+		gc.gridy = 7;
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.insets = new Insets(0, 0, 0, 0);
