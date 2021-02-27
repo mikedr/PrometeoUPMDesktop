@@ -7,16 +7,27 @@ import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
 public class MainFrame extends JFrame{
+	
 	private GraphPanel textPanel;
 	private Toolbar toolbar;
-	
 	private ResultsContainer resultsContainer;
+	
 	public MainFrame () {
 		super("Prometeo UP Meter");
-		setLayout(new BorderLayout());
+		setup();
+		instaciateComponents();
+		addComponents();
+	}
+	
+	private void addComponents() {
+		add(resultsContainer,BorderLayout.WEST);
+		add(textPanel,BorderLayout.CENTER);
+		add(toolbar,BorderLayout.NORTH);		
+	}
+
+	private void instaciateComponents() {
 		textPanel = new GraphPanel();
 		toolbar = new Toolbar();
-		
 		resultsContainer = new ResultsContainer();
 		toolbar.setVisibleManager(new VisibleManager() {
 			@Override
@@ -24,13 +35,13 @@ public class MainFrame extends JFrame{
 				resultsContainer.setVisible(setVisible);
 			}
 		});
-//		add(resultsPanel,BorderLayout.WEST);
-		add(resultsContainer,BorderLayout.WEST);
-		add(textPanel,BorderLayout.CENTER);
-		add(toolbar,BorderLayout.NORTH);
+	}
+
+	private void setup() {
+		setLayout(new BorderLayout());
 		setSize(800, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 		setVisible(true);
 	}
+	
 }

@@ -7,27 +7,34 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class Toolbar extends JPanel implements ActionListener{
+	
 	private JButton buttonDispositivo;
 	private JButton buttonCargarMediciones;
-	private StringListener textListener;
 	private VisibleManager visibleManager;
 	
 	public Toolbar() {
-		setBorder(BorderFactory.createEtchedBorder());
-		setLayout(new FlowLayout(FlowLayout.LEFT));
-		
+		setup();
+		instaciateComponents();
+		addComponents();
+	}
+	
+	private void addComponents() {
+		add(buttonCargarMediciones);
+		add(buttonDispositivo);		
+	}
+
+	private void instaciateComponents() {
 		buttonCargarMediciones = new JButton("Cargar Mediciones");
 		buttonDispositivo = new JButton("Dispositivo");
 		buttonCargarMediciones.addActionListener(this);
-		buttonDispositivo.addActionListener(this);
-		add(buttonCargarMediciones);
-		add(buttonDispositivo);
+		buttonDispositivo.addActionListener(this);		
 	}
-	
-	public void setStringListener(StringListener listener) {
-		this.textListener = listener;
+
+	private void setup() {
+		setBorder(BorderFactory.createEtchedBorder());
+		setLayout(new FlowLayout(FlowLayout.LEFT));		
 	}
-	
+
 	public void setVisibleManager(VisibleManager visibleManager) {
 		this.visibleManager = visibleManager;
 	}
