@@ -24,11 +24,81 @@ public class ResultsUPPanel extends JPanel {
 	private JButton okBtn;
 	
 	public ResultsUPPanel() {
-		Dimension dim = getPreferredSize();
-		dim.width = 200;
-		dim.height = 200;
-		setPreferredSize(dim);
+		setup();
+		instaciateComponents();
+		addComponents();
+	}
 
+	private void addComponents() {
+		setLayout(new GridBagLayout());
+		GridBagConstraints gc = new GridBagConstraints();
+		
+		////////////////////First Row
+		gc.gridy = 0;
+		gc.gridx = 0;
+		
+		gc.weightx = 1;
+		gc.weighty = 0.1;
+		
+		gc.fill = GridBagConstraints.NONE;
+		gc.anchor = GridBagConstraints.LINE_END;
+		gc.insets = new Insets(0, 0, 0, 5);
+		add(labelTempDeCorte,gc);
+		
+		gc.gridx = 1;
+		gc.insets = new Insets(0, 0, 0, 0);
+		gc.anchor = GridBagConstraints.LINE_START;
+		add(fieldTempDeCorte,gc);
+		
+		////////////////////Next Row	
+		gc.gridy++;
+		gc.gridx = 0;
+		
+		gc.weightx = 1;
+		gc.weighty = 0.1;
+		
+		gc.insets = new Insets(0, 0, 0, 5);
+		gc.anchor = GridBagConstraints.LINE_END;
+		add(labelTiempUP,gc);
+		
+		gc.gridx = 1;
+		gc.insets = new Insets(0, 0, 0, 0);
+		gc.anchor = GridBagConstraints.LINE_START;
+		add(fieldTiempUP,gc);
+
+		////////////////////Next Row	
+		gc.gridy++;
+		gc.gridx = 0;
+		
+		gc.weightx = 1;
+		gc.weighty = 0.1;
+		
+		gc.insets = new Insets(0, 0, 0, 5);
+		gc.anchor = GridBagConstraints.LINE_END;
+		add(labelUP,gc);
+		
+		gc.gridx = 1;
+		gc.insets = new Insets(0, 0, 0, 0);
+		gc.anchor = GridBagConstraints.LINE_START;
+		add(fieldUP,gc);
+		////////////////////Eighth row
+		gc.gridy++;
+		gc.gridx = 0;
+		
+		gc.weightx = 1;
+		gc.weighty = 0.1;
+		
+		gc.insets = new Insets(0, 0, 0, 5);
+		gc.anchor = GridBagConstraints.LINE_END;
+		add(fieldEditableTempDeCorte,gc);
+		
+		gc.gridx = 1;
+		gc.insets = new Insets(0, 0, 0, 0);
+		gc.anchor = GridBagConstraints.LINE_START;
+		add(okBtn,gc);			
+	}
+
+	private void instaciateComponents() {
 		labelTempDeCorte = new JLabel("Temperatura de corte: ");
 		fieldTempDeCorte = new JTextField(4);
 		fieldTempDeCorte.setEditable(false);
@@ -44,77 +114,17 @@ public class ResultsUPPanel extends JPanel {
 		fieldEditableTempDeCorte = new JTextField(4);
 		fieldEditableTempDeCorte.setEditable(true);
 		
-		okBtn = new JButton("Calcular");
-		Border innerBorder = BorderFactory.createTitledBorder("Resultados de pasturización");
-		Border outerBorder = BorderFactory.createEmptyBorder(5,5,5,5);
-		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
-		
-		setLayout(new GridBagLayout());
-		GridBagConstraints gc = new GridBagConstraints();
-		
-		////////////////////First Row
-		gc.weightx = 1;
-		gc.weighty = 0.1;
-		
-		gc.gridx = 0;
-		gc.gridy = 0;
-		gc.fill = GridBagConstraints.NONE;
-		gc.anchor = GridBagConstraints.LINE_END;
-		gc.insets = new Insets(0, 0, 0, 5);
-		add(labelTempDeCorte,gc);
-		
-		gc.gridx = 1;
-		gc.gridy = 0;
-		gc.insets = new Insets(0, 0, 0, 0);
-		gc.anchor = GridBagConstraints.LINE_START;
-		add(fieldTempDeCorte,gc);
-		
-		////////////////////Second Row	
-		gc.weightx = 1;
-		gc.weighty = 0.1;
-		
-		gc.gridy = 1;
-		gc.gridx = 0;
-		gc.insets = new Insets(0, 0, 0, 5);
-		gc.anchor = GridBagConstraints.LINE_END;
-		add(labelTiempUP,gc);
-		
-		gc.gridx = 1;
-		gc.gridy = 1;
-		gc.insets = new Insets(0, 0, 0, 0);
-		gc.anchor = GridBagConstraints.LINE_START;
-		add(fieldTiempUP,gc);
+		okBtn = new JButton("Calcular");		
+	}
 
-		////////////////////Third Row	
-		gc.weightx = 1;
-		gc.weighty = 0.1;
-		
-		gc.gridy = 2;
-		gc.gridx = 0;
-		gc.insets = new Insets(0, 0, 0, 5);
-		gc.anchor = GridBagConstraints.LINE_END;
-		add(labelUP,gc);
-		
-		gc.gridx = 1;
-		gc.gridy = 2;
-		gc.insets = new Insets(0, 0, 0, 0);
-		gc.anchor = GridBagConstraints.LINE_START;
-		add(fieldUP,gc);
-		////////////////////Eighth row
-		gc.weightx = 1;
-		gc.weighty = 0.1;
-		
-		gc.gridy = 3;
-		gc.gridx = 0;
-		gc.insets = new Insets(0, 0, 0, 5);
-		gc.anchor = GridBagConstraints.LINE_END;
-		add(fieldEditableTempDeCorte,gc);
-		
-		gc.gridx = 1;
-		gc.gridy = 3;
-		gc.insets = new Insets(0, 0, 0, 0);
-		gc.anchor = GridBagConstraints.LINE_START;
-		add(okBtn,gc);		
+	private void setup() {
+		Dimension dim = getPreferredSize();
+		dim.width = 200;
+		dim.height = 200;
+		setPreferredSize(dim);
+		Border innerBorder = BorderFactory.createTitledBorder("Resultados de pasturización");
+		Border outerBorder = BorderFactory.createEmptyBorder(5,5,5,5);	
+		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 	}
 
 }
