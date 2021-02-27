@@ -12,11 +12,11 @@ import javax.swing.JMenuItem;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 
-public class MainFrame extends JFrame{
+public class MainFrame extends JFrame implements ActionListener{
 	
 	private GraphPanel textPanel;
-	private Toolbar toolbar;
 	private ResultsContainer resultsContainer;
+	private VisibleManager visibleManager;
 	
 	public MainFrame () {
 		super("Prometeo UP Meter");
@@ -28,7 +28,6 @@ public class MainFrame extends JFrame{
 	private void addComponents() {
 		add(resultsContainer,BorderLayout.WEST);
 		add(textPanel,BorderLayout.CENTER);
-		add(toolbar,BorderLayout.NORTH);
 		setJMenuBar(createMenuBar());
 	}
 
@@ -62,6 +61,8 @@ public class MainFrame extends JFrame{
 		salirMenuItem.setMnemonic(KeyEvent.VK_I);
 		salirMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
 
+		importarMenuItem.addActionListener(this);
+		
 		salirMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);	
@@ -77,10 +78,8 @@ public class MainFrame extends JFrame{
 
 	private void instaciateComponents() {
 		textPanel = new GraphPanel();
-		toolbar = new Toolbar();
 		resultsContainer = new ResultsContainer();
-		toolbar.setVisibleManager(new VisibleManager() {
-			@Override
+		this.setVisibleManager(new VisibleManager() {
 			public void visibilizador(boolean setVisible) {
 				resultsContainer.setVisible(setVisible);
 			}
@@ -92,6 +91,21 @@ public class MainFrame extends JFrame{
 		setSize(800, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
+	}
+	
+	public void setVisibleManager(VisibleManager visibleManager) {
+		this.visibleManager = visibleManager;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object itemClickeado = e.getSource();
+		if (itemClickeado instanceof JMenuItem) {
+			JMenuItem clikedMenuItem = (JMenuItem)itemClickeado;
+			if(clikedMenuItem.getText().equals(new String("Importar mediciones"))) {
+				visibleManager.visibilizador(true);
+			}
+		}
 	}
 	
 }
