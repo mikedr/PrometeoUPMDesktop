@@ -103,9 +103,13 @@ public class MainFrame extends JFrame implements ActionListener{
 		if (itemClickeado instanceof JMenuItem) {
 			JMenuItem clikedMenuItem = (JMenuItem)itemClickeado;
 			if(clikedMenuItem.getText().equals(new String("Importar mediciones"))) {
-				visibleManager.visibilizador(true);
+				importarMediciones();
 			}
 		}
+	}
+
+	private void importarMediciones() {
+		visibleManager.visibilizador(true);		
 	}
 	
 }
