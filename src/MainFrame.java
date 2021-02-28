@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 
@@ -65,7 +66,12 @@ public class MainFrame extends JFrame implements ActionListener{
 		
 		salirMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);	
+				int action = JOptionPane.showConfirmDialog(MainFrame.this, 
+						"¿Desea cerrar la aplicación?", 
+						"Confirmar", JOptionPane.OK_CANCEL_OPTION);
+				if(action == JOptionPane.OK_OPTION) {
+					System.exit(0);		
+				}
 			}
 		});
 		
