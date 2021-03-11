@@ -85,6 +85,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		textPanel = new GraphPanel();
 		resultsContainer = new ResultsContainer();
 		fileChooser = new JFileChooser();
+		fileChooser.addChoosableFileFilter(new MedicionFileFilter());
 		this.setVisibleManager(new VisibleManager() {
 			public void visibilizador(boolean setVisible) {
 				resultsContainer.setVisible(setVisible);
