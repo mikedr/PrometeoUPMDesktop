@@ -3,14 +3,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-import javax.swing.JButton;
-import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 
 public class MainFrame extends JFrame implements ActionListener{
@@ -18,6 +16,7 @@ public class MainFrame extends JFrame implements ActionListener{
 	private GraphPanel textPanel;
 	private ResultsContainer resultsContainer;
 	private VisibleManager visibleManager;
+	private JFileChooser fileChooser;
 	
 	public MainFrame () {
 		super("Prometeo UP Meter");
@@ -85,6 +84,7 @@ public class MainFrame extends JFrame implements ActionListener{
 	private void instaciateComponents() {
 		textPanel = new GraphPanel();
 		resultsContainer = new ResultsContainer();
+		fileChooser = new JFileChooser();
 		this.setVisibleManager(new VisibleManager() {
 			public void visibilizador(boolean setVisible) {
 				resultsContainer.setVisible(setVisible);
@@ -115,7 +115,10 @@ public class MainFrame extends JFrame implements ActionListener{
 	}
 
 	private void importarMediciones() {
-		visibleManager.visibilizador(true);		
+		visibleManager.visibilizador(true);
+		if(fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+			System.out.println(fileChooser.getSelectedFile());
+		}
 	}
 	
 }
