@@ -8,6 +8,7 @@ public class ResultsContainer extends JPanel implements VisibleManager {
 	
 	private ResultsProcessPanel resultsPanel;
 	private ResultsUPPanel resultsUPPanel;
+	private TablePanel tablePanel;
 	
 	public ResultsContainer() {
 		setup();
@@ -17,12 +18,14 @@ public class ResultsContainer extends JPanel implements VisibleManager {
 
 	private void addComponents() {
 		add(resultsPanel,BorderLayout.NORTH);
-		add(resultsUPPanel,BorderLayout.CENTER);		
+		add(resultsUPPanel,BorderLayout.CENTER);
+		add(tablePanel,BorderLayout.SOUTH);
 	}
 
 	private void instaciateComponents() {
 		resultsPanel = new ResultsProcessPanel();
-		resultsUPPanel = new ResultsUPPanel();// TODO Auto-generated method stub
+		resultsUPPanel = new ResultsUPPanel();
+		tablePanel = new TablePanel();
 	}
 
 	private void setup() {
@@ -30,7 +33,7 @@ public class ResultsContainer extends JPanel implements VisibleManager {
 		setLayout(new BorderLayout());
 		dim.width = 400;
 		setPreferredSize(dim);
-		setVisible(false);		
+		setVisible(true);		
 	}
 
 	public void visibilizador(boolean setVisible) {

@@ -18,4 +18,13 @@ public class Controller {
 		tiempos.add(tiempo);
 		temperaturas.add(temperatura);
 	}
+
+	public List<LocalTime> getTiempos() {
+		return tiempos;
+	}
+
+	public List<Float> getTemperaturas() {
+		return temperaturas;
+	}
+	
 }

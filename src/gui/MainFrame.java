@@ -1,5 +1,6 @@
 package gui;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -101,6 +102,7 @@ public class MainFrame extends JFrame implements ActionListener{
 	private void setup() {
 		setLayout(new BorderLayout());
 		setSize(800, 600);
+		setMinimumSize(new Dimension(800,600));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
@@ -121,7 +123,7 @@ public class MainFrame extends JFrame implements ActionListener{
 	}
 
 	private void importarMediciones() {
-		visibleManager.visibilizador(true);
+//		visibleManager.visibilizador(true);
 		if(fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
 			System.out.println(fileChooser.getSelectedFile());
 		}
