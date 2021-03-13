@@ -12,12 +12,15 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
+import controller.Controller;
+
 public class MainFrame extends JFrame implements ActionListener{
 	
 	private GraphPanel textPanel;
 	private ResultsContainer resultsContainer;
 	private VisibleManager visibleManager;
 	private JFileChooser fileChooser;
+	private Controller controller;
 	
 	public MainFrame () {
 		super("Prometeo UP Meter");
@@ -92,6 +95,7 @@ public class MainFrame extends JFrame implements ActionListener{
 				resultsContainer.setVisible(setVisible);
 			}
 		});
+		controller = new Controller();
 	}
 
 	private void setup() {
