@@ -118,7 +118,7 @@ public class ResultsProcessPanel extends JPanel {
 
 	private void setup() {
 		Dimension dim = getPreferredSize();
-		dim.width = 200;
+		dim.width = 100;
 		dim.height = 200;
 		setPreferredSize(dim);
 		Border innerBorder = BorderFactory.createTitledBorder("Resultados del proceso");

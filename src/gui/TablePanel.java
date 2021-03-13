@@ -5,9 +5,11 @@ import java.awt.Dimension;
 import java.time.LocalTime;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.Border;
 
 public class TablePanel extends JPanel {
 	private JTable table;
@@ -29,11 +31,13 @@ public class TablePanel extends JPanel {
 	}
 
 	private void setup() {
-		setLayout(new BorderLayout());	
 		Dimension dim = getPreferredSize();
-		dim.width = 200;
-		dim.height = 200;
+		setLayout(new BorderLayout());
+		dim.width = 300;
 		setPreferredSize(dim);
+		Border innerBorder = BorderFactory.createTitledBorder("Mediciones");
+		Border outerBorder = BorderFactory.createEmptyBorder(5,5,5,5);	
+		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 	}
 
 	public void setData(List<LocalTime> tiempos, List<Float> temperaturas) {

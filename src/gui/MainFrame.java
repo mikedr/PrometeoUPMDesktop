@@ -22,6 +22,7 @@ public class MainFrame extends JFrame implements ActionListener{
 	private VisibleManager visibleManager;
 	private JFileChooser fileChooser;
 	private Controller controller;
+	private TablePanel tablePanel;
 	
 	public MainFrame () {
 		super("Prometeo UP Meter");
@@ -33,6 +34,7 @@ public class MainFrame extends JFrame implements ActionListener{
 	private void addComponents() {
 		add(resultsContainer,BorderLayout.WEST);
 		add(textPanel,BorderLayout.CENTER);
+		add(tablePanel,BorderLayout.EAST);
 		setJMenuBar(createMenuBar());
 	}
 
@@ -97,12 +99,13 @@ public class MainFrame extends JFrame implements ActionListener{
 			}
 		});
 		controller = new Controller();
+		tablePanel = new TablePanel();
 	}
 
 	private void setup() {
 		setLayout(new BorderLayout());
 		setSize(800, 600);
-		setMinimumSize(new Dimension(800,600));
+		setMinimumSize(new Dimension(1280,720));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
