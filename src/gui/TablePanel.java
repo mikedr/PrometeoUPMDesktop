@@ -11,6 +11,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.Border;
 
+import model.Measurement;
+
 public class TablePanel extends JPanel {
 	private JTable table;
 	private MeasurementsTableModel tableModel;
@@ -40,8 +42,8 @@ public class TablePanel extends JPanel {
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 	}
 
-	public void setData(List<LocalTime> tiempos, List<Float> temperaturas) {
-		tableModel.setData(tiempos, temperaturas);
+	public void setData(List<Measurement> db) {
+		tableModel.setData(db);
 	}
 	
 	public void refresh() {

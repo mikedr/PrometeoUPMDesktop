@@ -2,29 +2,20 @@ package controller;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.List;
+
+import model.Measurement;
 
 public class Controller {
 	
-	private List<LocalTime> tiempos;
-	private List<Float> temperaturas;
-	
-	public Controller() {
-		this.tiempos = new ArrayList<>();
-		this.temperaturas = new ArrayList<>();
-	}
+	private ArrayList<Measurement> db = new ArrayList<>(); 
 	
 	public void addMeasurement(LocalTime tiempo, Float temperatura) {
-		tiempos.add(tiempo);
-		temperaturas.add(temperatura);
+		Measurement measurement = new Measurement(tiempo, temperatura);
+		db.add(measurement);
 	}
 
-	public List<LocalTime> getTiempos() {
-		return tiempos;
-	}
-
-	public List<Float> getTemperaturas() {
-		return temperaturas;
+	public ArrayList<Measurement> getMeasurements() {
+		return db;
 	}
 	
 }

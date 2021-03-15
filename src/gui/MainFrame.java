@@ -4,6 +4,10 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -14,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import controller.Controller;
+import model.Measurement;
 
 public class MainFrame extends JFrame implements ActionListener{
 	
@@ -100,6 +105,12 @@ public class MainFrame extends JFrame implements ActionListener{
 		});
 		controller = new Controller();
 		tablePanel = new TablePanel();
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_TIME;
+		LocalTime tiempo = LocalTime.parse("00:00:00",dateTimeFormatter);
+		Float temperatura = 23.5F;
+		controller.addMeasurement(tiempo, temperatura);
+		tablePanel.setData(controller.getMeasurements());
+		tablePanel.refresh();
 	}
 
 	private void setup() {

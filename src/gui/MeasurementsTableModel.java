@@ -1,21 +1,19 @@
 package gui;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import model.Measurement;
+
 public class MeasurementsTableModel extends AbstractTableModel {
 	
-	private List<LocalTime> tiempos;
-	private List<Float> temperaturas;
+	private List<Measurement> db;
 	
 	private String[] colNames = {"Tiempo", "Temperatura"};
 	
 	public MeasurementsTableModel() {
-		this.tiempos = new ArrayList<>();
-		this.temperaturas = new ArrayList<>();
 	}
 	
 	@Override
@@ -23,9 +21,8 @@ public class MeasurementsTableModel extends AbstractTableModel {
 		return colNames[column];
 	}
 
-	public void setData (List<LocalTime> tiempos, List<Float> temperaturas) {
-		this.tiempos = tiempos;
-		this.temperaturas = temperaturas;
+	public void setData (List<Measurement> db) {
+		this.db = db;
 	}
 
 	@Override
@@ -35,7 +32,7 @@ public class MeasurementsTableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		return tiempos.size();
+		return db.size();
 	}
 
 	@Override
