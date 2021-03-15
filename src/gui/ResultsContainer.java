@@ -7,7 +7,6 @@ import javax.swing.JPanel;
 public class ResultsContainer extends JPanel implements VisibleManager {
 	
 	private ResultsProcessPanel resultsPanel;
-	private ResultsUPPanel resultsUPPanel;
 
 	
 	public ResultsContainer() {
@@ -17,13 +16,11 @@ public class ResultsContainer extends JPanel implements VisibleManager {
 	}
 
 	private void addComponents() {
-		add(resultsPanel,BorderLayout.NORTH);
-		add(resultsUPPanel,BorderLayout.CENTER);
+		add(resultsPanel,BorderLayout.CENTER);
 	}
 
 	private void instaciateComponents() {
 		resultsPanel = new ResultsProcessPanel();
-		resultsUPPanel = new ResultsUPPanel();
 	}
 
 	private void setup() {

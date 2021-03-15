@@ -2,14 +2,15 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.time.LocalTime;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.Border;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import model.Measurement;
 
@@ -30,6 +31,8 @@ public class TablePanel extends JPanel {
 	private void instaciateComponents() {
 		tableModel = new MeasurementsTableModel();
 		table = new JTable(tableModel);		
+		DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)table.getDefaultRenderer(Object.class);
+		renderer.setHorizontalAlignment(JLabel.CENTER);
 	}
 
 	private void setup() {
