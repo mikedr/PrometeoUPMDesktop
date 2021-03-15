@@ -105,12 +105,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		});
 		controller = new Controller();
 		tablePanel = new TablePanel();
-		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_TIME;
-		LocalTime tiempo = LocalTime.parse("00:00:00",dateTimeFormatter);
-		Float temperatura = 23.5F;
-		controller.addMeasurement(tiempo, temperatura);
 		tablePanel.setData(controller.getMeasurements());
-		tablePanel.refresh();
 	}
 
 	private void setup() {
