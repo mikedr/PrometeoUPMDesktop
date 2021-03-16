@@ -1,7 +1,8 @@
 package controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import model.Database;
@@ -17,91 +18,10 @@ public class Controller {
 	}
 
 	public List<Measurement> getMeasurements() {
-		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_TIME;
-		LocalTime tiempo = LocalTime.parse("00:00:00",dateTimeFormatter);
-		Float temperatura = 23.5F;
-		Measurement measurement = new Measurement(tiempo, temperatura);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
-		db.addMeasurement(measurement);
 		return db.getMeasurements();
 	}
 	
+	public void loadFromFile(File file) throws IOException {
+		db.loadFromFile(file);
+	}
 }

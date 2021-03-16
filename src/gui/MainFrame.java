@@ -4,10 +4,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -18,7 +15,6 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import controller.Controller;
-import model.Measurement;
 
 public class MainFrame extends JFrame implements ActionListener{
 	
@@ -37,9 +33,9 @@ public class MainFrame extends JFrame implements ActionListener{
 	}
 	
 	private void addComponents() {
-		add(resultsContainer,BorderLayout.WEST);
+		add(tablePanel,BorderLayout.WEST);
 		add(textPanel,BorderLayout.CENTER);
-		add(tablePanel,BorderLayout.EAST);
+		add(resultsContainer,BorderLayout.EAST);
 		setJMenuBar(createMenuBar());
 	}
 
@@ -73,7 +69,18 @@ public class MainFrame extends JFrame implements ActionListener{
 		salirMenuItem.setMnemonic(KeyEvent.VK_I);
 		salirMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
 
-		importarMenuItem.addActionListener(this);
+		importarMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+					try {
+						controller.loadFromFile(fileChooser.getSelectedFile());
+						tablePanel.refresh();
+					} catch (IOException e1) {
+						JOptionPane.showMessageDialog(MainFrame.this, "Couldnt not load data from file","Error",JOptionPane.ERROR_MESSAGE);
+					}					
+				}
+			}
+		});
 		
 		salirMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
