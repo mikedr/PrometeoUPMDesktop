@@ -10,7 +10,7 @@ public class MeasurementsTableModel extends AbstractTableModel {
 	
 	private List<Measurement> db;
 	
-	private String[] colNames = {"Tiempo", "Temperatura"};
+	private String[] colNames = {"Tiempo", "Temperatura (°C)"};
 	
 	public MeasurementsTableModel() {
 	}

@@ -1,6 +1,7 @@
 package model;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,9 +17,13 @@ public class Pasteurization {
 	private List<LocalTime> tiempos;
 	private List<Float> temperaturas;
 	
-	public Pasteurization(List<LocalTime> tiempos, List<Float> temperaturas) {
-		this.tiempos = tiempos;
-		this.temperaturas = temperaturas;
+	public Pasteurization(ArrayList<Measurement> measurements) {
+		this.tiempos = new ArrayList<>();
+		this.temperaturas = new ArrayList<>();
+		for (Measurement aMeasurement : measurements) {
+			this.tiempos.add(aMeasurement.getTiempo());
+			this.temperaturas.add(aMeasurement.getTemperatura());			
+		}
 		computeTempInicial();
 		computeTempFinal();
 		computeTempMaxima();

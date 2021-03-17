@@ -13,6 +13,7 @@ import java.util.StringTokenizer;
 public class Database {
 
 	private ArrayList<Measurement> measurements;
+	private Pasteurization pasteurization;
 	
 	public Database() {
 		measurements = new ArrayList<Measurement>();
@@ -26,6 +27,10 @@ public class Database {
 		return measurements;
 	}
 	
+	public Pasteurization getPasteurization() {
+		return pasteurization;
+	}
+
 	public void loadFromFile(File file) throws IOException {
 		FileReader fr = new FileReader(file);
 		BufferedReader br = new BufferedReader(fr); 
@@ -34,6 +39,7 @@ public class Database {
 			parseLine(line);
 		}
 		fr.close();
+		pasteurization = new Pasteurization(measurements);
 	}
 
 	private void parseLine(String line) {

@@ -9,7 +9,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+import javax.swing.table.DefaultTableCellRenderer;
+
+import model.Pasteurization;
 
 public class ResultsProcessPanel extends JPanel {
 	
@@ -33,6 +37,8 @@ public class ResultsProcessPanel extends JPanel {
 	private JTextField fieldUP;
 	
 	private JButton okBtn;
+	
+	private static final String DEGREES_CELSIUS = " °C";
 	
 	public ResultsProcessPanel() {
 		setup();
@@ -174,40 +180,53 @@ public class ResultsProcessPanel extends JPanel {
 		gc.anchor = GridBagConstraints.LINE_START;
 		add(okBtn,gc);
 	}
+	
+	public void enableCalculadoraUP() {
+		okBtn.setVisible(true);
+		fieldEditableTempDeCorte.setVisible(true);
+	}
 
 	private void instaciateComponents() {
 		labelTempInicial = new JLabel("Temperatura inicial: ");
-		fieldTempInicial = new JTextField(4);
+		fieldTempInicial = new JTextField(5);
+		fieldTempInicial.setHorizontalAlignment(JLabel.CENTER);
 		fieldTempInicial.setEditable(false);
 		
 		labelTempMaxima = new JLabel("Temperatura máxima: ");
-		fieldTempMaxima = new JTextField(4);
+		fieldTempMaxima = new JTextField(5);
+		fieldTempInicial.setHorizontalAlignment(JLabel.CENTER);
 		fieldTempMaxima.setEditable(false);
 		
 		labelTempFinal = new JLabel("Temperatura final: ");
-		fieldTempFinal = new JTextField(4);
+		fieldTempFinal = new JTextField(5);
+		fieldTempFinal.setHorizontalAlignment(JLabel.CENTER);
 		fieldTempFinal.setEditable(false);
 		
 		labelTiempTotal = new JLabel("Tiempo total: ");
-		fieldTiempTotal = new JTextField(4);
+		fieldTiempTotal = new JTextField(5);
+		fieldTiempTotal.setHorizontalAlignment(JLabel.CENTER);
 		fieldTiempTotal.setEditable(false);		
 		
 		labelTempDeCorte = new JLabel("Temperatura de corte: ");
-		fieldTempDeCorte = new JTextField(4);
+		fieldTempDeCorte = new JTextField(5);
+		fieldTempDeCorte.setHorizontalAlignment(JLabel.CENTER);
 		fieldTempDeCorte.setEditable(false);
 		
 		labelTiempUP = new JLabel("Tiempo UP: ");
-		fieldTiempUP = new JTextField(4);
+		fieldTiempUP = new JTextField(5);
+		fieldTiempUP.setHorizontalAlignment(JLabel.CENTER);
 		fieldTiempUP.setEditable(false);
 		
 		labelUP = new JLabel("UP: ");
-		fieldUP = new JTextField(4);
+		fieldUP = new JTextField(5);
+		fieldUP.setHorizontalAlignment(JLabel.CENTER);
 		fieldUP.setEditable(false);
 
 		fieldEditableTempDeCorte = new JTextField(4);
-		fieldEditableTempDeCorte.setEditable(true);
+		fieldEditableTempDeCorte.setVisible(false);
 		
 		okBtn = new JButton("Calcular");
+		okBtn.setVisible(false);
 	}
 
 	private void setup() {
@@ -218,6 +237,13 @@ public class ResultsProcessPanel extends JPanel {
 		Border innerBorder = BorderFactory.createTitledBorder("Resultados del proceso");
 		Border outerBorder = BorderFactory.createEmptyBorder(5,5,5,5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));		
+	}
+
+	public void setMeasurementsParameters (Pasteurization pasteurization) {
+		fieldTempInicial.setText(Float.toString(pasteurization.getTempInicial())+DEGREES_CELSIUS);
+		fieldTempMaxima.setText(Float.toString(pasteurization.getTempMaxima())+DEGREES_CELSIUS);
+		fieldTempFinal.setText(Float.toString(pasteurization.getTempFinal())+DEGREES_CELSIUS);
+		fieldTiempTotal.setText(pasteurization.getTiempTotal().toString());
 	}
 
 }

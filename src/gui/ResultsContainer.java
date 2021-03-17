@@ -4,10 +4,11 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
+import model.Pasteurization;
+
 public class ResultsContainer extends JPanel implements VisibleManager {
 	
 	private ResultsProcessPanel resultsPanel;
-
 	
 	public ResultsContainer() {
 		setup();
@@ -17,6 +18,10 @@ public class ResultsContainer extends JPanel implements VisibleManager {
 
 	private void addComponents() {
 		add(resultsPanel,BorderLayout.CENTER);
+	}
+	
+	public void enableCalculadoraUP() {
+		resultsPanel.enableCalculadoraUP();
 	}
 
 	private void instaciateComponents() {
@@ -33,5 +38,9 @@ public class ResultsContainer extends JPanel implements VisibleManager {
 
 	public void visibilizador(boolean setVisible) {
 		this.setVisible(setVisible);
+	}
+
+	public void setMeasurementsParameters(Pasteurization pasteurization) {
+		resultsPanel.setMeasurementsParameters(pasteurization);	
 	}
 }
