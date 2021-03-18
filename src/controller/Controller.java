@@ -13,7 +13,6 @@ import model.Pasteurization;
 public class Controller {
 	
 	Database db = new Database();
-
 	
 	public void addMeasurement(LocalTime tiempo, Float temperatura) {
 		Measurement measurement = new Measurement(tiempo, temperatura);
@@ -30,5 +29,9 @@ public class Controller {
 	
 	public void loadFromFile(File file) throws IOException {
 		db.loadFromFile(file);
+	}
+
+	public void computeUP(String text) {
+		db.getPasteurization().computePasteurization(Float.parseFloat(text));
 	}
 }

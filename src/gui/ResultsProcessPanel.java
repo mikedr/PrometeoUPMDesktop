@@ -3,19 +3,20 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.border.Border;
-import javax.swing.table.DefaultTableCellRenderer;
 
+import controller.Controller;
 import model.Pasteurization;
 
-public class ResultsProcessPanel extends JPanel {
+public class ResultsProcessPanel extends JPanel implements ActionListener {
 	
 	private JLabel labelTempInicial;
 	private JLabel labelTempMaxima;
@@ -37,6 +38,8 @@ public class ResultsProcessPanel extends JPanel {
 	private JTextField fieldUP;
 	
 	private JButton okBtn;
+	
+	private Controller controller;
 	
 	private static final String DEGREES_CELSIUS = " °C";
 	
@@ -227,6 +230,8 @@ public class ResultsProcessPanel extends JPanel {
 		
 		okBtn = new JButton("Calcular");
 		okBtn.setVisible(false);
+		
+		okBtn.addActionListener(this);
 	}
 
 	private void setup() {
@@ -244,6 +249,18 @@ public class ResultsProcessPanel extends JPanel {
 		fieldTempMaxima.setText(Float.toString(pasteurization.getTempMaxima())+DEGREES_CELSIUS);
 		fieldTempFinal.setText(Float.toString(pasteurization.getTempFinal())+DEGREES_CELSIUS);
 		fieldTiempTotal.setText(pasteurization.getTiempTotal().toString());
+	}
+
+	public void setController(Controller controller) {
+		this.controller = controller;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		controller.computeUP(fieldEditableTempDeCorte.getText());
+		fieldTempDeCorte.setText(Float.toString(controller.getPasteurization().getTempCorte())+DEGREES_CELSIUS);
+		fieldTiempUP.setText(controller.getPasteurization().getTiempUP().toString());
+		fieldUP.setText(Float.toString(controller.getPasteurization().getUp()));
 	}
 
 }

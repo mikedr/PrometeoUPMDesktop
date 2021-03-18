@@ -77,6 +77,7 @@ public class MainFrame extends JFrame implements ActionListener{
 						tablePanel.refresh();
 						resultsContainer.enableCalculadoraUP();
 						resultsContainer.setMeasurementsParameters(controller.getPasteurization());
+						resultsContainer.setController(controller);
 					} catch (IOException e1) {
 						JOptionPane.showMessageDialog(MainFrame.this, "Couldnt not load data from file","Error",JOptionPane.ERROR_MESSAGE);
 					}					

@@ -4,6 +4,7 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
+import controller.Controller;
 import model.Pasteurization;
 
 public class ResultsContainer extends JPanel implements VisibleManager {
@@ -38,6 +39,10 @@ public class ResultsContainer extends JPanel implements VisibleManager {
 
 	public void visibilizador(boolean setVisible) {
 		this.setVisible(setVisible);
+	}
+	
+	public void setController(Controller controller) {
+		resultsPanel.setController(controller);
 	}
 
 	public void setMeasurementsParameters(Pasteurization pasteurization) {
