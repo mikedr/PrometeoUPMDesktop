@@ -18,7 +18,7 @@ import controller.Controller;
 
 public class MainFrame extends JFrame implements ActionListener{
 	
-	private GraphPanel textPanel;
+	private ChartPanel chartPanel;
 	private ResultsContainer resultsContainer;
 	private VisibleManager visibleManager;
 	private JFileChooser fileChooser;
@@ -34,7 +34,7 @@ public class MainFrame extends JFrame implements ActionListener{
 	
 	private void addComponents() {
 		add(tablePanel,BorderLayout.WEST);
-		add(textPanel,BorderLayout.CENTER);
+		add(chartPanel,BorderLayout.CENTER);
 		add(resultsContainer,BorderLayout.EAST);
 		setJMenuBar(createMenuBar());
 	}
@@ -104,7 +104,7 @@ public class MainFrame extends JFrame implements ActionListener{
 	}
 
 	private void instaciateComponents() {
-		textPanel = new GraphPanel();
+		chartPanel = new ChartPanel();
 		resultsContainer = new ResultsContainer();
 		fileChooser = new JFileChooser();
 		fileChooser.addChoosableFileFilter(new MedicionFileFilter());

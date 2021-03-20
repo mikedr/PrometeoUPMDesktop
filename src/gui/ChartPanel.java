@@ -4,20 +4,22 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
-public class GraphPanel extends JPanel{
+public class ChartPanel extends JPanel{
 	
-	public GraphPanel() {
+	private TimeSeriesChartExample2 chart;
+	
+	public ChartPanel() {
 		setup();
 		instaciateComponents();
 		addComponents();
 	}
 
 	private void addComponents() {
-
+		add(chart.createChart(),BorderLayout.CENTER);
 	}
 
 	private void instaciateComponents() {
-
+		chart = new TimeSeriesChartExample2();
 	}
 	
 	private void setup() {
