@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYAreaRenderer;
@@ -12,7 +13,9 @@ import org.jfree.data.time.Second;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
-public class TimeSeriesChartExample2 extends JPanel{  
+import javafx.scene.chart.ValueAxis;
+
+public class ChartTemperatureAndUP extends JPanel{  
   
   private static final long serialVersionUID = 1L;  
   
@@ -88,19 +91,25 @@ public class TimeSeriesChartExample2 extends JPanel{
     XYAreaRenderer splinerenderer = new XYAreaRenderer();
     splinerenderer.setSeriesFillPaint(0, Color.BLUE);
     plot.setRenderer(1, splinerenderer);
-    plot.setRangeAxis(0, new NumberAxis("Series 1"));
-    plot.setRangeAxis(1, new NumberAxis("Series 2"));
+    plot.setRangeAxis(0, new NumberAxis("Temperatura"));
+    plot.setRangeAxis(1, new NumberAxis("UP"));
     plot.setDomainAxis(new NumberAxis("X Axis"));
+    
     
     //Map the data to the appropriate axis
     plot.mapDatasetToRangeAxis(0, 0);
     plot.mapDatasetToRangeAxis(1, 1);   
+    
+    DateAxis domainAxis = new DateAxis("");
+    plot.setDomainAxis(domainAxis);
 
     //generate the chart
     JFreeChart chart = new JFreeChart(plot);
 //    chart.setBackgroundPaint(Color.WHITE);
     
     ChartPanel panel = new ChartPanel(chart);  
+    
+    panel.setSize(800, 600);
   
     return panel;
   }  

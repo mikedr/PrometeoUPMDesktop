@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 
 public class ChartPanel extends JPanel{
 	
-	private TimeSeriesChartExample2 chart;
+	private ChartTemperature chart;
 	
 	public ChartPanel() {
 		setup();
@@ -19,13 +19,11 @@ public class ChartPanel extends JPanel{
 	}
 
 	private void instaciateComponents() {
-		chart = new TimeSeriesChartExample2();
+		chart = new ChartTemperature();
 	}
 	
 	private void setup() {
 		Dimension dim = getPreferredSize();
-		setLayout(new BorderLayout());
-		dim.width = 700;
 		setPreferredSize(dim);
 		setVisible(true);
 	}
