@@ -17,6 +17,10 @@ public class ChartPanel extends JPanel{
 	private void addComponents() {
 		add(chart.createChart(),BorderLayout.CENTER);
 	}
+	
+	public void createChart() {
+		chart.createChart();
+	}
 
 	private void instaciateComponents() {
 		chart = new ChartTemperatureAndUP();
