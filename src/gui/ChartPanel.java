@@ -1,12 +1,16 @@
 package gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.List;
 
 import javax.swing.JPanel;
 
+import model.Measurement;
+import model.Pasteurization;
+
 public class ChartPanel extends JPanel{
 	
-	private ChartTemperatureAndUP chart;
+	private Chart chart;
 	
 	public ChartPanel() {
 		setup();
@@ -15,15 +19,17 @@ public class ChartPanel extends JPanel{
 	}
 
 	private void addComponents() {
-		add(chart.createChart(),BorderLayout.CENTER);
+		add(chart.getPanel(),BorderLayout.CENTER);
 	}
 	
-	public void createChart() {
-		chart.createChart();
+	public void createChartTemp(List<Measurement> measurements) {
+		chart.createChartTemperature(measurements);
+		add(chart.getPanel(),BorderLayout.CENTER);
+		
 	}
 
 	private void instaciateComponents() {
-		chart = new ChartTemperatureAndUP();
+		chart = new Chart();
 	}
 	
 	private void setup() {

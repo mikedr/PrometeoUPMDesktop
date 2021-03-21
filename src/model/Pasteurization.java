@@ -16,10 +16,12 @@ public class Pasteurization {
 	private LocalTime tiempUP;
 	private List<LocalTime> tiempos;
 	private List<Float> temperaturas;
+	private List<Measurement> measurements;
 	
 	public Pasteurization(ArrayList<Measurement> measurements) {
 		this.tiempos = new ArrayList<>();
 		this.temperaturas = new ArrayList<>();
+		this.measurements = new ArrayList<>();
 		for (Measurement aMeasurement : measurements) {
 			this.tiempos.add(aMeasurement.getTiempo());
 			this.temperaturas.add(aMeasurement.getTemperatura());			
