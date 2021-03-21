@@ -16,12 +16,16 @@ public class Pasteurization {
 	private LocalTime tiempUP;
 	private List<LocalTime> tiempos;
 	private List<Float> temperaturas;
+	private List<Float> UPs;
+	private List<Float> temperaturaDeCorte;
 	private List<Measurement> measurements;
 	
 	public Pasteurization(ArrayList<Measurement> measurements) {
 		this.tiempos = new ArrayList<>();
 		this.temperaturas = new ArrayList<>();
 		this.measurements = new ArrayList<>();
+		this.UPs = new ArrayList<>();
+		this.temperaturaDeCorte = new ArrayList<>();
 		for (Measurement aMeasurement : measurements) {
 			this.tiempos.add(aMeasurement.getTiempo());
 			this.temperaturas.add(aMeasurement.getTemperatura());			
@@ -74,18 +78,24 @@ public class Pasteurization {
 	}
 
 	private void computeUP() {
+		this.UPs = new ArrayList<>();
+		this.temperaturaDeCorte = new ArrayList<>();
 		int pos = 0;
 		float uP = 0F;
 		float timeDelta = calculateTimeDelta(tiempos);
 		LocalTime timeStartUP = null;
 		LocalTime timeEndUP = null;
 		for(Float aTemp : temperaturas) {
-			if(aTemp > tempCorte) {
+			this.temperaturaDeCorte.add(tempCorte);
+			if (aTemp > tempCorte) {
 				if(timeStartUP == null) {
 					timeStartUP = tiempos.get(pos);
 				}
 				uP = uP + calculateUP(aTemp,timeDelta);
+				this.UPs.add(uP);
 				timeEndUP = tiempos.get(pos);
+			} else {
+				UPs.add(0f);
 			}
 		    pos++;
 		}

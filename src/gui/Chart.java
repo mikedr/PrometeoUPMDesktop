@@ -24,7 +24,8 @@ public class Chart extends JPanel{
   
 	private static final long serialVersionUID = 1L;
   
-	TimeSeriesCollection dataset1 = new TimeSeriesCollection();
+	private TimeSeriesCollection dataset1 = new TimeSeriesCollection();
+	private TimeSeries serieTemperatura;
 	
     private ChartPanel panel;
     
@@ -56,12 +57,12 @@ public class Chart extends JPanel{
   
     public void createChartTemperature(List<Measurement> measurements) {
     	TimeSeriesCollection dataset1 = new TimeSeriesCollection();
-    	TimeSeries series1 = new TimeSeries("Temperatura vs Tiempo", Second.class);
+    	serieTemperatura = new TimeSeries("Temperatura vs Tiempo", Second.class);
 		for(Measurement aMeasurement : measurements) {
-			series1.add(new Second(aMeasurement.getTiempo().getSecond(), aMeasurement.getTiempo().getMinute(), 
+			serieTemperatura.add(new Second(aMeasurement.getTiempo().getSecond(), aMeasurement.getTiempo().getMinute(), 
 					aMeasurement.getTiempo().getHour(), 1, 1, 2021), aMeasurement.getTemperatura()); 				
 		}
-		dataset1.addSeries(series1);
+		dataset1.addSeries(serieTemperatura);
 		XYPlot plot = new XYPlot();
 		plot.setDataset(0, dataset1);
 
