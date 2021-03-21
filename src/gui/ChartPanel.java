@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 
 public class ChartPanel extends JPanel{
 	
-	private ChartTemperature chart;
+	private ChartTemperatureAndUP chart;
 	
 	public ChartPanel() {
 		setup();
@@ -19,7 +19,7 @@ public class ChartPanel extends JPanel{
 	}
 
 	private void instaciateComponents() {
-		chart = new ChartTemperature();
+		chart = new ChartTemperatureAndUP();
 	}
 	
 	private void setup() {

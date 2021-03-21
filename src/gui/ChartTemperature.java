@@ -8,21 +8,19 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.*;
-import org.jfree.data.Range;
+import org.jfree.chart.renderer.xy.DefaultXYItemRenderer;
+import org.jfree.chart.renderer.xy.XYAreaRenderer;
 import org.jfree.data.time.Second;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
-
-import javafx.scene.chart.ValueAxis;
 
 public class ChartTemperature extends JPanel{  
   
   private static final long serialVersionUID = 1L;  
   
+  TimeSeriesCollection dataset1 = new TimeSeriesCollection();
+  
   public ChartPanel createChart() {  
-    
-    //create the series - add some dummy data
     TimeSeries series1 = new TimeSeries("Temperatura vs Tiempo", Second.class);
     series1.add(new Second(0, 0, 0, 1, 1, 2021), 23.3);  
     series1.add(new Second(10, 0, 0, 1, 1, 2021), 24.1);  
@@ -49,50 +47,35 @@ public class ChartTemperature extends JPanel{
     series1.add(new Second(40, 3, 0, 1, 1, 2021), 26.9);  
     series1.add(new Second(50, 3, 0, 1, 1, 2021), 26.1);
 
-    //create the datasets
-    TimeSeriesCollection dataset1 = new TimeSeriesCollection();
-    dataset1.addSeries(series1);
-    
-
-    //construct the plot
     XYPlot plot = new XYPlot();
     plot.setDataset(0, dataset1);
 
-    //customize the plot with renderers and axis
     DefaultXYItemRenderer splineRendererTemp = new DefaultXYItemRenderer();
     splineRendererTemp.setBaseShapesVisible(false);
-    
-//    org.jfree.chart.renderer.xy.DefaultXYItemRenderer
     
     plot.setRenderer(0, splineRendererTemp);//use default fill paint for first series
     XYAreaRenderer splinerenderer = new XYAreaRenderer();
     splinerenderer.setSeriesFillPaint(0, Color.BLUE);
-//    plot.setRenderer(1, splinerenderer);
     
     NumberAxis rangeAxis = new NumberAxis("Temperatura");
     plot.setRangeAxis(0, rangeAxis);
     
-//    plot.setRangeAxis(1, new NumberAxis("UP"));
     NumberAxis domainAxis = new NumberAxis("X Axis");
     plot.setDomainAxis(domainAxis);
     
-    //Map the data to the appropriate axis
     plot.mapDatasetToRangeAxis(0, 0);
-//    plot.mapDatasetToRangeAxis(1, 1);   
 
     DateAxis dateAxis = new DateAxis("");
     plot.setDomainAxis(dateAxis);
     
-
-
-    //generate the chart
     JFreeChart chart = new JFreeChart(plot);
-//    chart.setBackgroundPaint(Color.WHITE);
     
     ChartPanel panel = new ChartPanel(chart);  
     
-    panel.setSize(800, 600);
-  
     return panel;
   }  
+  
+  public void createSerie() {
+	//dataset1.addSeries(series1); 
+  }
 }  
