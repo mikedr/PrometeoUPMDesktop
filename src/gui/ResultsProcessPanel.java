@@ -40,6 +40,7 @@ public class ResultsProcessPanel extends JPanel implements ActionListener {
 	private JButton okBtn;
 	
 	private Controller controller;
+	private PasteurizationListener tempCorteListener;
 	
 	private static final String DEGREES_CELSIUS = " °C";
 	
@@ -244,23 +245,29 @@ public class ResultsProcessPanel extends JPanel implements ActionListener {
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));		
 	}
 
+	public void setController(Controller controller) {
+		this.controller = controller;
+	}
+	
 	public void setMeasurementsParameters (Pasteurization pasteurization) {
 		fieldTempInicial.setText(Float.toString(pasteurization.getTempInicial())+DEGREES_CELSIUS);
 		fieldTempMaxima.setText(Float.toString(pasteurization.getTempMaxima())+DEGREES_CELSIUS);
 		fieldTempFinal.setText(Float.toString(pasteurization.getTempFinal())+DEGREES_CELSIUS);
 		fieldTiempTotal.setText(pasteurization.getTiempTotal().toString());
 	}
-
-	public void setController(Controller controller) {
-		this.controller = controller;
+	
+	public void setTempCorteListener(PasteurizationListener tempCorteListener) {
+		this.tempCorteListener = tempCorteListener;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		controller.computeUP(fieldEditableTempDeCorte.getText());
-		fieldTempDeCorte.setText(Float.toString(controller.getPasteurization().getTempCorte())+DEGREES_CELSIUS);
-		fieldTiempUP.setText(controller.getPasteurization().getTiempUP().toString());
-		fieldUP.setText(Float.toString(controller.getPasteurization().getUp()));
+		if(e.getSource() instanceof JButton) {
+			controller.computeUP(fieldEditableTempDeCorte.getText());
+			fieldTempDeCorte.setText(Float.toString(controller.getPasteurization().getTempCorte())+DEGREES_CELSIUS);
+			fieldTiempUP.setText(controller.getPasteurization().getTiempUP().toString());
+			fieldUP.setText(Float.toString(controller.getPasteurization().getUp()));
+			tempCorteListener.pasteurizationEmitted(controller.getPasteurization());
+		}
 	}
-
 }

@@ -25,7 +25,11 @@ public class ChartPanel extends JPanel{
 	public void createChartTemp(List<Measurement> measurements) {
 		chart.createChartTemperature(measurements);
 		add(chart.getPanel(),BorderLayout.CENTER);
-		
+	}
+	
+	public void createChartTempAndUP(Pasteurization pasteurization) {
+		chart.createChartTemperatureAndUP(pasteurization);
+		add(chart.getPanel(),BorderLayout.CENTER);
 	}
 
 	private void instaciateComponents() {

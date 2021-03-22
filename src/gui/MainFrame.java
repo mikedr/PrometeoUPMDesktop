@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import controller.Controller;
+import model.Pasteurization;
 
 public class MainFrame extends JFrame implements ActionListener{
 	
@@ -110,6 +111,15 @@ public class MainFrame extends JFrame implements ActionListener{
 	private void instaciateComponents() {
 		chartPanel = new ChartPanel();
 		resultsContainer = new ResultsContainer();
+		resultsContainer.setTempCorteListener(new PasteurizationListener(){
+			public void pasteurizationEmitted(Pasteurization pasteurization) {
+				chartPanel.removeAll();
+				chartPanel.revalidate();
+				chartPanel.repaint();
+				chartPanel.createChartTempAndUP(pasteurization);
+			}
+			
+		});
 		fileChooser = new JFileChooser();
 		fileChooser.addChoosableFileFilter(new MedicionFileFilter());
 		this.setVisibleManager(new VisibleManager() {

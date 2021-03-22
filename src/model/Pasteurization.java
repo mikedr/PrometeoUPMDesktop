@@ -142,5 +142,13 @@ public class Pasteurization {
 	public List<Float> getTemperaturas() {
 		return temperaturas;
 	}
+
+	public List<Float> getUPs() {
+		return UPs;
+	}
+
+	public void setUPs(List<Float> uPs) {
+		UPs = uPs;
+	}
 	
 }

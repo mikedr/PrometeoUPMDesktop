@@ -48,4 +48,8 @@ public class ResultsContainer extends JPanel implements VisibleManager {
 	public void setMeasurementsParameters(Pasteurization pasteurization) {
 		resultsPanel.setMeasurementsParameters(pasteurization);	
 	}
+
+	public void setTempCorteListener(PasteurizationListener tempCorteListener) {
+		resultsPanel.setTempCorteListener(tempCorteListener);		
+	}
 }
