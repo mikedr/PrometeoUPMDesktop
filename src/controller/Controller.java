@@ -30,7 +30,7 @@ public class Controller {
 		db.loadFromFile(file);
 	}
 
-	public void computeUP(String text) {
-		db.getPasteurization().computePasteurization(Float.parseFloat(text));
+	public void computeUP(Float temperaturaDeCorte) {
+		db.getPasteurization().computePasteurization(temperaturaDeCorte);
 	}
 }

@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -263,11 +264,25 @@ public class ResultsProcessPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() instanceof JButton) {
-			controller.computeUP(fieldEditableTempDeCorte.getText());
-			fieldTempDeCorte.setText(Float.toString(controller.getPasteurization().getTempCorte())+DEGREES_CELSIUS);
-			fieldTiempUP.setText(controller.getPasteurization().getTiempUP().toString());
-			fieldUP.setText(Float.toString(controller.getPasteurization().getUp()));
-			tempCorteListener.pasteurizationEmitted(controller.getPasteurization());
+			Float temperaturaDeCorte = null;
+			Float temperaturaMinima = controller.getPasteurization().getTempInicial();
+			Float temperaturaMaxima = controller.getPasteurization().getTempMaxima();
+			try {
+				temperaturaDeCorte = Float.parseFloat(fieldEditableTempDeCorte.getText());
+			} catch (Exception ex) {
+				JOptionPane.showMessageDialog(this.getParent().getParent(), "La temperatura de corte ingresada es incorrecta","Error",JOptionPane.ERROR_MESSAGE);				
+			}
+			if (temperaturaDeCorte <= temperaturaMinima) {
+				JOptionPane.showMessageDialog(this.getParent().getParent(), "La temperatura de corte debe ser mayor que la temperatura inicial","Error",JOptionPane.ERROR_MESSAGE);				
+			} else if(temperaturaDeCorte >= temperaturaMaxima) {
+				JOptionPane.showMessageDialog(this.getParent().getParent(), "La temperatura de corte debe ser menor que la temperatura final","Error",JOptionPane.ERROR_MESSAGE);				
+			} else if(temperaturaDeCorte != null) {
+				controller.computeUP(temperaturaDeCorte);
+				fieldTempDeCorte.setText(Float.toString(temperaturaDeCorte)+DEGREES_CELSIUS);
+				fieldTiempUP.setText(controller.getPasteurization().getTiempUP().toString());
+				fieldUP.setText(Float.toString(controller.getPasteurization().getUp()));
+				tempCorteListener.pasteurizationEmitted(controller.getPasteurization());				
+			}
 		}
 	}
 }
