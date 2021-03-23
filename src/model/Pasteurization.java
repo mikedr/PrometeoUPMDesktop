@@ -150,5 +150,13 @@ public class Pasteurization {
 	public void setUPs(List<Float> uPs) {
 		UPs = uPs;
 	}
+
+	public List<Float> getTemperaturaDeCorte() {
+		return temperaturaDeCorte;
+	}
+
+	public void setTemperaturaDeCorte(List<Float> temperaturaDeCorte) {
+		this.temperaturaDeCorte = temperaturaDeCorte;
+	}
 	
 }

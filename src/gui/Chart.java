@@ -26,6 +26,7 @@ public class Chart extends JPanel{
   
 	private TimeSeries serieTemperatura;
 	private TimeSeries serieUP;
+	private TimeSeries serieTemperaturaDeCorte;
 	
     private ChartPanel panel;
     
@@ -57,7 +58,7 @@ public class Chart extends JPanel{
   
     public void createChartTemperature(List<Measurement> measurements) {
     	TimeSeriesCollection dataset1 = new TimeSeriesCollection();
-    	serieTemperatura = new TimeSeries("Temperatura vs Tiempo", Second.class);
+    	serieTemperatura = new TimeSeries("Temperatura", Second.class);
 		for(Measurement aMeasurement : measurements) {
 			serieTemperatura.add(new Second(aMeasurement.getTiempo().getSecond(), aMeasurement.getTiempo().getMinute(), 
 					aMeasurement.getTiempo().getHour(), 1, 1, 2021), aMeasurement.getTemperatura()); 				
@@ -90,22 +91,28 @@ public class Chart extends JPanel{
   }  
   
 	public void createChartTemperatureAndUP(Pasteurization pasteurization) {  
-	    serieUP = new TimeSeries("UP vs Tiempo", Second.class);
+	    serieUP = new TimeSeries("UP", Second.class);
+	    serieTemperaturaDeCorte = new TimeSeries("Temperatura de corte", Second.class);
 	    int i = 0;
 		for(LocalTime unTiempo : pasteurization.getTiempos()) {
 			serieUP.add(new Second(unTiempo.getSecond(), unTiempo.getMinute(), 
-					unTiempo.getHour(), 1, 1, 2021), pasteurization.getUPs().get(i)); 		
+					unTiempo.getHour(), 1, 1, 2021), pasteurization.getUPs().get(i));
+			serieTemperaturaDeCorte.add(new Second(unTiempo.getSecond(), unTiempo.getMinute(), 
+					unTiempo.getHour(), 1, 1, 2021), pasteurization.getTemperaturaDeCorte().get(i));
 			i++;
 		}
 	    TimeSeriesCollection dataset1 = new TimeSeriesCollection();
 	    TimeSeriesCollection dataset2 = new TimeSeriesCollection();
+	    TimeSeriesCollection dataset3 = new TimeSeriesCollection();
 	    dataset1.addSeries(serieTemperatura);
 	    dataset2.addSeries(serieUP);
+	    dataset3.addSeries(serieTemperaturaDeCorte);
 	    
 	    //construct the plot
 	    XYPlot plot = new XYPlot();
 	    plot.setDataset(0, dataset1);
 	    plot.setDataset(1, dataset2);
+	    plot.setDataset(2, dataset3);
 	    
 	    DefaultXYItemRenderer splineRendererTemp = new DefaultXYItemRenderer();
 	    splineRendererTemp.setBaseShapesVisible(false);
@@ -116,16 +123,22 @@ public class Chart extends JPanel{
 //	    splinerenderer.setSeriesFillPaint(0, Color.BLUE);
 	    
 	    DefaultXYItemRenderer splineRendererUP = new DefaultXYItemRenderer();
+	    DefaultXYItemRenderer splineRendererTempCorte = new DefaultXYItemRenderer();
 	    plot.setRenderer(1, splineRendererUP);
+	    plot.setRenderer(2, splineRendererTempCorte);
 	    splineRendererUP.setBaseShapesVisible(false);
+	    splineRendererTempCorte.setBaseShapesVisible(false);
 	    splineRendererUP.setPaint(Color.BLUE);
+	    splineRendererTempCorte.setPaint(Color.GREEN);
 	    
 	    plot.setRangeAxis(0, new NumberAxis("Temperatura"));
 	    plot.setRangeAxis(1, new NumberAxis("UP"));
+//	    plot.setRangeAxis(2, new NumberAxis("Temperatura de corte"));
 	    plot.setDomainAxis(new NumberAxis("X Axis"));
 	    
 	    plot.mapDatasetToRangeAxis(0, 0);
 	    plot.mapDatasetToRangeAxis(1, 1);   
+	    plot.mapDatasetToRangeAxis(2, 0);
 	    
 	    DateAxis domainAxis = new DateAxis("");
 	    plot.setDomainAxis(domainAxis);
