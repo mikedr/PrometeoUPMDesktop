@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import controller.Controller;
 import model.Pasteurization;
 
-public class ResultsContainer extends JPanel implements VisibleManager {
+public class ResultsContainer extends JPanel {
 	
 	private ResultsProcessPanel resultsPanel;
 	

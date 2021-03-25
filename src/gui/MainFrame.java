@@ -21,7 +21,6 @@ public class MainFrame extends JFrame implements ActionListener{
 	
 	private ChartPanel chartPanel;
 	private ResultsContainer resultsContainer;
-	private VisibleManager visibleManager;
 	private JFileChooser fileChooser;
 	private Controller controller;
 	private TablePanel tablePanel;
@@ -127,11 +126,6 @@ public class MainFrame extends JFrame implements ActionListener{
 		});
 		fileChooser = new JFileChooser();
 		fileChooser.addChoosableFileFilter(new MedicionFileFilter());
-		this.setVisibleManager(new VisibleManager() {
-			public void visibilizador(boolean setVisible) {
-				resultsContainer.setVisible(setVisible);
-			}
-		});
 		controller = new Controller();
 		tablePanel = new TablePanel();
 		tablePanel.setData(controller.getMeasurements());
@@ -145,10 +139,6 @@ public class MainFrame extends JFrame implements ActionListener{
 		setVisible(true);
 	}
 	
-	public void setVisibleManager(VisibleManager visibleManager) {
-		this.visibleManager = visibleManager;
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object itemClickeado = e.getSource();
@@ -161,7 +151,6 @@ public class MainFrame extends JFrame implements ActionListener{
 	}
 
 	private void importarMediciones() {
-//		visibleManager.visibilizador(true);
 		if(fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
 			System.out.println(fileChooser.getSelectedFile());
 		}
