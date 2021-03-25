@@ -52,4 +52,8 @@ public class ResultsContainer extends JPanel {
 	public void setTempCorteListener(PasteurizationListener tempCorteListener) {
 		resultsPanel.setTempCorteListener(tempCorteListener);		
 	}
+
+	public void setAgregadorDeMenu(AgregadorDeMenu agregadorDeMenu) {
+		resultsPanel.setAgregadorDeMenu(agregadorDeMenu);
+	}
 }

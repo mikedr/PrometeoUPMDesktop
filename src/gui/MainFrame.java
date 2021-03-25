@@ -46,7 +46,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		JMenuItem reporteMenuItem = new JMenuItem("Reporte");
 		exportarMenuItem.add(medicionesXlsMenuItem);
 		exportarMenuItem.add(reporteMenuItem);
-		menuBar.getMenu(1).add(exportarMenuItem);
+		menuBar.getMenu(0).add(exportarMenuItem);
 	}
 
 	private JMenuBar createMenuBar() {
@@ -121,6 +121,12 @@ public class MainFrame extends JFrame implements ActionListener{
 				chartPanel.revalidate();
 				chartPanel.repaint();
 				chartPanel.createChartTempAndUP(pasteurization);
+			}
+			
+		});
+		resultsContainer.setAgregadorDeMenu(new AgregadorDeMenu() {
+			public void agregarMenuExportar() {
+				addExportarMenuItem();
 			}
 			
 		});

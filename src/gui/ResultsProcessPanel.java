@@ -42,6 +42,7 @@ public class ResultsProcessPanel extends JPanel implements ActionListener {
 	
 	private Controller controller;
 	private PasteurizationListener tempCorteListener;
+	private AgregadorDeMenu agregadorDeMenu;
 	
 	private static final String DEGREES_CELSIUS = " °C";
 	
@@ -235,6 +236,10 @@ public class ResultsProcessPanel extends JPanel implements ActionListener {
 		
 		okBtn.addActionListener(this);
 	}
+	
+	public void setAgregadorDeMenu(AgregadorDeMenu agregadorDeMenu) {
+		this.agregadorDeMenu = agregadorDeMenu;
+	}
 
 	private void setup() {
 		Dimension dim = getPreferredSize();
@@ -281,8 +286,10 @@ public class ResultsProcessPanel extends JPanel implements ActionListener {
 				fieldTempDeCorte.setText(Float.toString(temperaturaDeCorte)+DEGREES_CELSIUS);
 				fieldTiempUP.setText(controller.getPasteurization().getTiempUP().toString());
 				fieldUP.setText(Float.toString(controller.getPasteurization().getUp()));
-				tempCorteListener.pasteurizationEmitted(controller.getPasteurization());				
+				tempCorteListener.pasteurizationEmitted(controller.getPasteurization());
+				agregadorDeMenu.agregarMenuExportar();
 			}
 		}
 	}
+
 }
