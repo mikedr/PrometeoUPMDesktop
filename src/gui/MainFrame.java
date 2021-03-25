@@ -25,6 +25,7 @@ public class MainFrame extends JFrame implements ActionListener{
 	private JFileChooser fileChooser;
 	private Controller controller;
 	private TablePanel tablePanel;
+	private JMenuBar menuBar;
 	
 	public MainFrame () {
 		super("Prometeo UP Meter");
@@ -39,27 +40,31 @@ public class MainFrame extends JFrame implements ActionListener{
 		add(resultsContainer,BorderLayout.EAST);
 		setJMenuBar(createMenuBar());
 	}
+	
+	private void addExportarMenuItem() {
+		JMenu exportarMenuItem = new JMenu("Exportar resultados");
+		JMenuItem medicionesXlsMenuItem = new JMenuItem("Mediciones");
+		JMenuItem reporteMenuItem = new JMenuItem("Reporte");
+		exportarMenuItem.add(medicionesXlsMenuItem);
+		exportarMenuItem.add(reporteMenuItem);
+		menuBar.getMenu(1).add(exportarMenuItem);
+	}
 
 	private JMenuBar createMenuBar() {
-		JMenuBar menuBar = new JMenuBar();
+		menuBar = new JMenuBar();
 		
 		JMenu medicionesMenu = new JMenu("Mediciones");
 		JMenu dispositivoMenu = new JMenu("Dispositivo");
 		JMenu aplicacionMenu = new JMenu("Prometeo UPM");
 		
 		JMenuItem importarMenuItem = new JMenuItem("Importar mediciones");
-		JMenu exportarMenuItem = new JMenu("Exportar resultados");
-		JMenuItem medicionesXlsMenuItem = new JMenuItem("Mediciones");
-		JMenuItem reporteMenuItem = new JMenuItem("Reporte");
+
 		JMenuItem aboutMenuItem = new JMenuItem("Acerca de");
 		JMenuItem salirMenuItem = new JMenuItem("Salir");
 
-		exportarMenuItem.add(medicionesXlsMenuItem);
-		exportarMenuItem.add(reporteMenuItem);
 		
 		medicionesMenu.add(importarMenuItem);
-		medicionesMenu.add(exportarMenuItem);
-		
+
 		aplicacionMenu.add(aboutMenuItem);
 		aplicacionMenu.addSeparator();
 		aplicacionMenu.add(salirMenuItem);
