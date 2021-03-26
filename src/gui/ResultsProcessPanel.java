@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+import org.jfree.chart.JFreeChart;
+
 import controller.Controller;
 import model.Pasteurization;
 
@@ -191,7 +193,7 @@ public class ResultsProcessPanel extends JPanel implements ActionListener {
 		okBtn.setVisible(true);
 		fieldEditableTempDeCorte.setVisible(true);
 	}
-
+	
 	private void instaciateComponents() {
 		labelTempInicial = new JLabel("Temperatura inicial: ");
 		fieldTempInicial = new JTextField(5);

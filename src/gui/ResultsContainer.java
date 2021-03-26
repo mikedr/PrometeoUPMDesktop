@@ -4,6 +4,8 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
+import org.jfree.chart.JFreeChart;
+
 import controller.Controller;
 import model.Pasteurization;
 
@@ -24,7 +26,7 @@ public class ResultsContainer extends JPanel {
 	public void enableCalculadoraUP() {
 		resultsPanel.enableCalculadoraUP();
 	}
-
+	
 	private void instaciateComponents() {
 		resultsPanel = new ResultsProcessPanel();
 	}

@@ -1,9 +1,12 @@
 package gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Rectangle2D;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.swing.JFileChooser;
@@ -13,6 +16,14 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
+
+import org.jfree.chart.JFreeChart;
+
+import com.itextpdf.awt.DefaultFontMapper;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfTemplate;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import controller.Controller;
 import model.Pasteurization;
@@ -46,8 +57,25 @@ public class MainFrame extends JFrame {
 		JMenuItem reporteMenuItem = new JMenuItem("Reporte");
 		reporteMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int i;
-				i=0;
+					JFreeChart chart = getChart();
+					Document document = new Document();
+					try {
+					PdfWriter writer;
+					writer = PdfWriter.getInstance(document,
+					new FileOutputStream("TestingPDFfile.pdf"));
+					document.open();
+					PdfContentByte cb = writer.getDirectContent();
+					PdfTemplate tp = cb.createTemplate(400, 300);
+					Graphics2D g2d = tp.createGraphics(400, 300,
+					new DefaultFontMapper());
+					Rectangle2D r2d = new Rectangle2D.Double(0, 0, 400, 300);
+					chart.draw(g2d, r2d);
+					g2d.dispose();
+					cb.addTemplate(tp, 0, 0);
+				}
+				catch(Exception ex) {
+					ex.printStackTrace();
+				}
 			}
 		});
 		exportarMenuItem.add(medicionesXlsMenuItem);
@@ -118,6 +146,10 @@ public class MainFrame extends JFrame {
 		return menuBar;
 	}
 
+	public JFreeChart getChart() {
+		return chartPanel.getChart();
+	}
+	
 	private void instaciateComponents() {
 		chartPanel = new ChartPanel();
 		resultsContainer = new ResultsContainer();

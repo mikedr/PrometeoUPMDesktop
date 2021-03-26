@@ -27,33 +27,25 @@ public class Chart extends JPanel{
 	private TimeSeries serieTemperatura;
 	private TimeSeries serieUP;
 	private TimeSeries serieTemperaturaDeCorte;
-	
+	private JFreeChart chart;
     private ChartPanel panel;
     
     public Chart() {
 		XYPlot plot = new XYPlot();
-
 		DefaultXYItemRenderer splineRendererTemp = new DefaultXYItemRenderer();
-    splineRendererTemp.setBaseShapesVisible(false);
-    
-    plot.setRenderer(0, splineRendererTemp);//use default fill paint for first series
-    XYAreaRenderer splinerenderer = new XYAreaRenderer();
-    splinerenderer.setSeriesFillPaint(0, Color.BLUE);
-    
-    NumberAxis rangeAxis = new NumberAxis("Temperatura");
-    plot.setRangeAxis(0, rangeAxis);
-    
-    NumberAxis domainAxis = new NumberAxis("X Axis");
-    plot.setDomainAxis(domainAxis);
-    
-    plot.mapDatasetToRangeAxis(0, 0);
-
-    DateAxis dateAxis = new DateAxis("");
-    plot.setDomainAxis(dateAxis);
-    
-    JFreeChart chart = new JFreeChart(plot);
-    
-    this.panel = new ChartPanel(chart);
+		splineRendererTemp.setBaseShapesVisible(false);
+		plot.setRenderer(0, splineRendererTemp);//use default fill paint for first series
+		XYAreaRenderer splinerenderer = new XYAreaRenderer();
+		splinerenderer.setSeriesFillPaint(0, Color.BLUE);
+		NumberAxis rangeAxis = new NumberAxis("Temperatura");
+		plot.setRangeAxis(0, rangeAxis);
+		NumberAxis domainAxis = new NumberAxis("X Axis");
+		plot.setDomainAxis(domainAxis);
+		plot.mapDatasetToRangeAxis(0, 0);
+		DateAxis dateAxis = new DateAxis("");
+		plot.setDomainAxis(dateAxis);
+		JFreeChart chart = new JFreeChart(plot);
+		this.panel = new ChartPanel(chart);
 	}
   
     public void createChartTemperature(List<Measurement> measurements) {
@@ -66,27 +58,19 @@ public class Chart extends JPanel{
 		dataset1.addSeries(serieTemperatura);
 		XYPlot plot = new XYPlot();
 		plot.setDataset(0, dataset1);
-
 		DefaultXYItemRenderer splineRendererTemp = new DefaultXYItemRenderer();
 		splineRendererTemp.setBaseShapesVisible(false);
-    
 		plot.setRenderer(0, splineRendererTemp);//use default fill paint for first series
 		XYAreaRenderer splinerenderer = new XYAreaRenderer();
 		splinerenderer.setSeriesFillPaint(0, Color.BLUE);
-    
 	    NumberAxis rangeAxis = new NumberAxis("Temperatura");
 	    plot.setRangeAxis(0, rangeAxis);
-	    
 	    NumberAxis domainAxis = new NumberAxis("X Axis");
 	    plot.setDomainAxis(domainAxis);
-	    
 	    plot.mapDatasetToRangeAxis(0, 0);
-	
 	    DateAxis dateAxis = new DateAxis("");
 	    plot.setDomainAxis(dateAxis);
-	    
-	    JFreeChart chart = new JFreeChart(plot);
-	    
+	    chart = new JFreeChart(plot);
 	    this.panel = new ChartPanel(chart);  
   }  
   
@@ -107,13 +91,10 @@ public class Chart extends JPanel{
 	    dataset1.addSeries(serieTemperatura);
 	    dataset2.addSeries(serieUP);
 	    dataset3.addSeries(serieTemperaturaDeCorte);
-	    
-	    //construct the plot
 	    XYPlot plot = new XYPlot();
 	    plot.setDataset(0, dataset1);
 	    plot.setDataset(1, dataset2);
 	    plot.setDataset(2, dataset3);
-	    
 	    DefaultXYItemRenderer splineRendererTemp = new DefaultXYItemRenderer();
 	    splineRendererTemp.setBaseShapesVisible(false);
 	    splineRendererTemp.setPaint(Color.RED);
@@ -130,23 +111,22 @@ public class Chart extends JPanel{
 	    splineRendererTempCorte.setBaseShapesVisible(false);
 	    splineRendererUP.setPaint(Color.BLUE);
 	    splineRendererTempCorte.setPaint(Color.GREEN);
-	    
 	    plot.setRangeAxis(0, new NumberAxis("Temperatura"));
 	    plot.setRangeAxis(1, new NumberAxis("UP"));
 //	    plot.setRangeAxis(2, new NumberAxis("Temperatura de corte"));
 	    plot.setDomainAxis(new NumberAxis("X Axis"));
-	    
 	    plot.mapDatasetToRangeAxis(0, 0);
 	    plot.mapDatasetToRangeAxis(1, 1);   
 	    plot.mapDatasetToRangeAxis(2, 0);
-	    
 	    DateAxis domainAxis = new DateAxis("");
 	    plot.setDomainAxis(domainAxis);
-	    
-	    JFreeChart chart = new JFreeChart(plot);
-	    
+	    chart = new JFreeChart(plot);
 	    this.panel = new ChartPanel(chart);
 	  }
+
+	public JFreeChart getChart() {
+		return chart;
+	}
 
 	public ChartPanel getPanel() {
 		return panel;

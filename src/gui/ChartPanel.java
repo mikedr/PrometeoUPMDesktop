@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import org.jfree.chart.JFreeChart;
+
 import model.Measurement;
 import model.Pasteurization;
 
@@ -34,6 +36,10 @@ public class ChartPanel extends JPanel{
 
 	private void instaciateComponents() {
 		chart = new Chart();
+	}
+	
+	public JFreeChart getChart() {
+		return chart.getChart();
 	}
 	
 	private void setup() {
