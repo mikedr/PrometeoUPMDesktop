@@ -17,7 +17,7 @@ import javax.swing.KeyStroke;
 import controller.Controller;
 import model.Pasteurization;
 
-public class MainFrame extends JFrame implements ActionListener{
+public class MainFrame extends JFrame {
 	
 	private ChartPanel chartPanel;
 	private ResultsContainer resultsContainer;
@@ -44,6 +44,12 @@ public class MainFrame extends JFrame implements ActionListener{
 		JMenu exportarMenuItem = new JMenu("Exportar resultados");
 		JMenuItem medicionesXlsMenuItem = new JMenuItem("Mediciones");
 		JMenuItem reporteMenuItem = new JMenuItem("Reporte");
+		reporteMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int i;
+				i=0;
+			}
+		});
 		exportarMenuItem.add(medicionesXlsMenuItem);
 		exportarMenuItem.add(reporteMenuItem);
 		menuBar.getMenu(0).add(exportarMenuItem);
@@ -143,23 +149,6 @@ public class MainFrame extends JFrame implements ActionListener{
 		setMinimumSize(new Dimension(1280,720));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
-	}
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		Object itemClickeado = e.getSource();
-		if (itemClickeado instanceof JMenuItem) {
-			JMenuItem clikedMenuItem = (JMenuItem)itemClickeado;
-			if(clikedMenuItem.getText().equals(new String("Importar mediciones"))) {
-				importarMediciones();
-			}
-		}
-	}
-
-	private void importarMediciones() {
-		if(fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
-			System.out.println(fileChooser.getSelectedFile());
-		}
 	}
 	
 }
