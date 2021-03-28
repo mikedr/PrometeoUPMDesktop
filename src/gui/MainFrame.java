@@ -1,5 +1,6 @@
 package gui;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -22,6 +23,7 @@ import org.jfree.chart.JFreeChart;
 import com.itextpdf.awt.DefaultFontMapper;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -59,17 +61,17 @@ public class MainFrame extends JFrame {
 		reporteMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFreeChart chart = getChart();
-				Document document = new Document (new Rectangle(400, 300));
+				Document document = new Document (new Rectangle(1000,707));
 				try {
 					PdfWriter writer;
 					writer = PdfWriter.getInstance(document,
-					new FileOutputStream("TestingPDF.pdf"));
+					new FileOutputStream("TestingPDF11.pdf"));
 					document.open();
 					PdfContentByte cb = writer.getDirectContent();
-					PdfTemplate tp = cb.createTemplate(800, 600);
-					Graphics2D g2d = tp.createGraphics(400, 300,
+					PdfTemplate tp = cb.createTemplate(1000, 707);
+					Graphics2D g2d = tp.createGraphics(800, 600,
 					new DefaultFontMapper());
-					Rectangle2D r2d = new Rectangle2D.Double(0, 0, 400, 300);
+					Rectangle2D r2d = new Rectangle2D.Double(200, 150, 600, 400);
 					chart.draw(g2d, r2d);
 					g2d.dispose();
 					cb.addTemplate(tp, 0, 0);
