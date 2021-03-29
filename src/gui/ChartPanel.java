@@ -7,41 +7,34 @@ import javax.swing.JPanel;
 
 import org.jfree.chart.JFreeChart;
 
+import controller.Controller;
 import model.Measurement;
 import model.Pasteurization;
 
 public class ChartPanel extends JPanel{
 	
-	private Chart chart;
+	private Controller controller;
 	
-	public ChartPanel() {
+	public ChartPanel(Controller controller) {
+		this.controller = controller;
 		setup();
-		instaciateComponents();
 		addComponents();
 	}
 
 	private void addComponents() {
-		add(chart.getPanel(),BorderLayout.CENTER);
+		add(controller.getChart().getPanel(),BorderLayout.CENTER);
 	}
 	
 	public void createChartTemp(List<Measurement> measurements) {
-		chart.createChartTemperature(measurements);
-		add(chart.getPanel(),BorderLayout.CENTER);
+		controller.getChart().createChartTemperature(measurements);
+		add(controller.getChart().getPanel(),BorderLayout.CENTER);
 	}
 	
 	public void createChartTempAndUP(Pasteurization pasteurization) {
-		chart.createChartTemperatureAndUP(pasteurization);
-		add(chart.getPanel(),BorderLayout.CENTER);
+		controller.getChart().createChartTemperatureAndUP(pasteurization);
+		add(controller.getChart().getPanel(),BorderLayout.CENTER);
 	}
 
-	private void instaciateComponents() {
-		chart = new Chart();
-	}
-	
-	public JFreeChart getChart() {
-		return chart.getChart();
-	}
-	
 	private void setup() {
 		Dimension dim = getPreferredSize();
 		setPreferredSize(dim);

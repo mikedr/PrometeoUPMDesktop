@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.time.LocalTime;
 import java.util.List;
 
+import gui.Chart;
 import model.Database;
 import model.Measurement;
 import model.Pasteurization;
@@ -16,6 +17,10 @@ public class Controller {
 	public void addMeasurement(LocalTime tiempo, Float temperatura) {
 		Measurement measurement = new Measurement(tiempo, temperatura);
 		db.addMeasurement(measurement);
+	}
+	
+	public Chart getChart() {
+		return db.getChart();
 	}
 	
 	public List<Measurement> getMeasurements() {

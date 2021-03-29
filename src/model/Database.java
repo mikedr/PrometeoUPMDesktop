@@ -10,17 +10,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.jfree.chart.JFreeChart;
+
+import gui.Chart;
+
 public class Database {
 
 	private ArrayList<Measurement> measurements;
 	private Pasteurization pasteurization;
+	private Chart chart;
 	
 	public Database() {
 		measurements = new ArrayList<Measurement>();
+		chart = new Chart();
 	}
 	
 	public void addMeasurement(Measurement measurement) {
 		measurements.add(measurement);
+	}
+	
+	public Chart getChart() {
+		return chart;
 	}
 	
 	public List<Measurement> getMeasurements() {

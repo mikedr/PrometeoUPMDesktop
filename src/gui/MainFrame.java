@@ -58,7 +58,7 @@ public class MainFrame extends JFrame {
 		JMenuItem reporteMenuItem = new JMenuItem("Reporte");
 		reporteMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFreeChart chart = getChart();
+				JFreeChart chart = controller.getChart().getChart();
 				Document document = new Document (new Rectangle(1000,707));
 				try {
 					PdfWriter writer;
@@ -146,13 +146,9 @@ public class MainFrame extends JFrame {
 		return menuBar;
 	}
 
-	public JFreeChart getChart() {
-		return chartPanel.getChart();
-	}
-	
 	private void instaciateComponents() {
 		controller = new Controller();
-		chartPanel = new ChartPanel();
+		chartPanel = new ChartPanel(controller);
 		resultsContainer = new ResultsContainer(controller);
 		resultsContainer.setTempCorteListener(new PasteurizationListener(){
 			public void pasteurizationEmitted(Pasteurization pasteurization) {
