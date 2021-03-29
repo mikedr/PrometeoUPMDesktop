@@ -21,8 +21,13 @@ import org.jfree.chart.JFreeChart;
 
 import com.itextpdf.awt.DefaultFontMapper;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -63,8 +68,36 @@ public class MainFrame extends JFrame {
 				try {
 					PdfWriter writer;
 					writer = PdfWriter.getInstance(document,
-					new FileOutputStream("TestingPDF11.pdf"));
+					new FileOutputStream("TestingPDF.pdf"));
 					document.open();
+					
+			        Font fontbold = FontFactory.getFont("Arial", 40, Font.BOLD);
+			        Paragraph p = new Paragraph("Reporte pasteurización", fontbold);
+			        p.setSpacingAfter(20);
+			        p.setAlignment(1); // Center
+			        document.add(p);
+					
+					PdfPTable table = new PdfPTable(2);
+//					PdfPCell cell = new PdfPCell(new Paragraph("Resultados"));
+					PdfPCell cell = new PdfPCell();
+					cell.setColspan(2);
+					table.addCell(cell);
+					table.addCell(controller.getDb().getTempInicial());
+					table.addCell(Float.toString(controller.getPasteurization().getTempInicial())+controller.getDb().getDegreesCelsius());
+					table.addCell(controller.getDb().getTempMax());
+					table.addCell(Float.toString(controller.getPasteurization().getTempMaxima())+controller.getDb().getDegreesCelsius());
+					table.addCell(controller.getDb().getTempFinal());
+					table.addCell(Float.toString(controller.getPasteurization().getTempFinal())+controller.getDb().getDegreesCelsius());
+					table.addCell(controller.getDb().getTempCorte());
+					table.addCell(Float.toString(controller.getPasteurization().getTempCorte())+controller.getDb().getDegreesCelsius());
+					table.addCell(controller.getDb().getTiempTotal());
+					table.addCell(controller.getPasteurization().getTiempTotal().toString());
+					table.addCell(controller.getDb().getTiempUp());
+					table.addCell(controller.getPasteurization().getTiempUP().toString());
+					table.addCell(controller.getDb().getUp());
+					table.addCell(Float.toString(controller.getPasteurization().getUp()));				
+					document.add(table);
+					
 					PdfContentByte cb = writer.getDirectContent();
 					PdfTemplate tp = cb.createTemplate(1000, 707);
 					Graphics2D g2d = tp.createGraphics(800, 600,

@@ -194,7 +194,7 @@ public class ResultsProcessPanel extends JPanel implements ActionListener {
 		okBtn.setVisible(true);
 		fieldEditableTempDeCorte.setVisible(true);
 	}
-	
+
 	private void instaciateComponents() {
 		labelTempInicial = new JLabel("Temperatura inicial: ");
 		fieldTempInicial = new JTextField(5);

@@ -19,6 +19,14 @@ public class Database {
 	private ArrayList<Measurement> measurements;
 	private Pasteurization pasteurization;
 	private Chart chart;
+	private static final String TEMP_INICIAL = "Temperatura inicial";
+	private static final String TEMP_MAX = "Temperatura máxima";
+	private static final String TEMP_FINAL = "Temperatura final";
+	private static final String TEMP_CORTE = "Temperatura de corte";
+	private static final String TIEMP_TOTAL = "Tiempo total";
+	private static final String TIEMP_UP = "Tiempo UP";
+	private static final String UP = "UP";
+	private static final String DEGREES_CELSIUS = " °C";
 	
 	public Database() {
 		measurements = new ArrayList<Measurement>();
@@ -39,6 +47,42 @@ public class Database {
 	
 	public Pasteurization getPasteurization() {
 		return pasteurization;
+	}
+
+	public static String getDegreesCelsius() {
+		return DEGREES_CELSIUS;
+	}
+
+	public static String getTempInicial() {
+		return TEMP_INICIAL;
+	}
+
+	public static String getTempMax() {
+		return TEMP_MAX;
+	}
+
+	public static String getTempFinal() {
+		return TEMP_FINAL;
+	}
+
+	public static String getTempCorte() {
+		return TEMP_CORTE;
+	}
+
+	public static String getTiempTotal() {
+		return TIEMP_TOTAL;
+	}
+
+	public static String getTiempUp() {
+		return TIEMP_UP;
+	}
+
+	public static String getUp() {
+		return UP;
+	}
+
+	public void setChart(Chart chart) {
+		this.chart = chart;
 	}
 
 	public void loadFromFile(File file) throws IOException {

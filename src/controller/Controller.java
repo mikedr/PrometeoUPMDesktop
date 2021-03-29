@@ -12,7 +12,7 @@ import model.Pasteurization;
 
 public class Controller {
 	
-	Database db = new Database();
+	private Database db = new Database();
 	
 	public void addMeasurement(LocalTime tiempo, Float temperatura) {
 		Measurement measurement = new Measurement(tiempo, temperatura);
@@ -23,6 +23,10 @@ public class Controller {
 		return db.getChart();
 	}
 	
+	public Database getDb() {
+		return db;
+	}
+
 	public List<Measurement> getMeasurements() {
 		return db.getMeasurements();
 	}
