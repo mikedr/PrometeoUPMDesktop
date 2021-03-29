@@ -48,7 +48,8 @@ public class ResultsProcessPanel extends JPanel implements ActionListener {
 	
 	private static final String DEGREES_CELSIUS = " °C";
 	
-	public ResultsProcessPanel() {
+	public ResultsProcessPanel(Controller controller) {
+		this.controller = controller;
 		setup();
 		instaciateComponents();
 		addComponents();
@@ -253,10 +254,6 @@ public class ResultsProcessPanel extends JPanel implements ActionListener {
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));		
 	}
 
-	public void setController(Controller controller) {
-		this.controller = controller;
-	}
-	
 	public void setMeasurementsParameters (Pasteurization pasteurization) {
 		fieldTempInicial.setText(Float.toString(pasteurization.getTempInicial())+DEGREES_CELSIUS);
 		fieldTempMaxima.setText(Float.toString(pasteurization.getTempMaxima())+DEGREES_CELSIUS);

@@ -1,6 +1,5 @@
 package gui;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -23,7 +22,6 @@ import org.jfree.chart.JFreeChart;
 import com.itextpdf.awt.DefaultFontMapper;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -119,7 +117,6 @@ public class MainFrame extends JFrame {
 						tablePanel.refresh();
 						resultsContainer.enableCalculadoraUP();
 						resultsContainer.setMeasurementsParameters(controller.getPasteurization());
-						resultsContainer.setController(controller);
 						chartPanel.removeAll();
 						chartPanel.revalidate();
 						chartPanel.repaint();
@@ -154,8 +151,9 @@ public class MainFrame extends JFrame {
 	}
 	
 	private void instaciateComponents() {
+		controller = new Controller();
 		chartPanel = new ChartPanel();
-		resultsContainer = new ResultsContainer();
+		resultsContainer = new ResultsContainer(controller);
 		resultsContainer.setTempCorteListener(new PasteurizationListener(){
 			public void pasteurizationEmitted(Pasteurization pasteurization) {
 				chartPanel.removeAll();
@@ -173,7 +171,6 @@ public class MainFrame extends JFrame {
 		});
 		fileChooser = new JFileChooser();
 		fileChooser.addChoosableFileFilter(new MedicionFileFilter());
-		controller = new Controller();
 		tablePanel = new TablePanel();
 		tablePanel.setData(controller.getMeasurements());
 	}

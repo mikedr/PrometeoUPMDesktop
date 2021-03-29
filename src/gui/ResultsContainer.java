@@ -12,8 +12,10 @@ import model.Pasteurization;
 public class ResultsContainer extends JPanel {
 	
 	private ResultsProcessPanel resultsPanel;
+	private Controller controller;
 	
-	public ResultsContainer() {
+	public ResultsContainer(Controller controller) {
+		this.controller = controller;
 		setup();
 		instaciateComponents();
 		addComponents();
@@ -28,7 +30,7 @@ public class ResultsContainer extends JPanel {
 	}
 	
 	private void instaciateComponents() {
-		resultsPanel = new ResultsProcessPanel();
+		resultsPanel = new ResultsProcessPanel(controller);
 	}
 
 	private void setup() {
@@ -43,10 +45,6 @@ public class ResultsContainer extends JPanel {
 		this.setVisible(setVisible);
 	}
 	
-	public void setController(Controller controller) {
-		resultsPanel.setController(controller);
-	}
-
 	public void setMeasurementsParameters(Pasteurization pasteurization) {
 		resultsPanel.setMeasurementsParameters(pasteurization);	
 	}
