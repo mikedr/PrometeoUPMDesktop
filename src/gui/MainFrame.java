@@ -8,6 +8,9 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -17,6 +20,13 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jfree.chart.JFreeChart;
 
 import com.itextpdf.awt.DefaultFontMapper;
@@ -32,6 +42,7 @@ import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import controller.Controller;
+import model.FilaExcel;
 import model.Pasteurization;
 
 public class MainFrame extends JFrame {
@@ -60,61 +71,109 @@ public class MainFrame extends JFrame {
 	private void addExportarMenuItem() {
 		JMenu exportarMenuItem = new JMenu("Exportar resultados");
 		JMenuItem medicionesXlsMenuItem = new JMenuItem("Mediciones");
-		JMenuItem reporteMenuItem = new JMenuItem("Reporte");
-		reporteMenuItem.addActionListener(new ActionListener() {
+		medicionesXlsMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFreeChart chart = controller.getChart().getChart();
-				Document document = new Document (new Rectangle(1000,707));
-				try {
-					PdfWriter writer;
-					writer = PdfWriter.getInstance(document,
-					new FileOutputStream("TestingPDF.pdf"));
-					document.open();
-					
-			        Font fontbold = FontFactory.getFont("Arial", 40, Font.BOLD);
-			        Paragraph p = new Paragraph("Reporte pasteurización", fontbold);
-			        p.setSpacingAfter(20);
-			        p.setAlignment(1); // Center
-			        document.add(p);
-					
-					PdfPTable table = new PdfPTable(2);
-//					PdfPCell cell = new PdfPCell(new Paragraph("Resultados"));
-					PdfPCell cell = new PdfPCell();
-					cell.setColspan(2);
-					table.addCell(cell);
-					table.addCell(controller.getDb().getTempInicial());
-					table.addCell(Float.toString(controller.getPasteurization().getTempInicial())+controller.getDb().getDegreesCelsius());
-					table.addCell(controller.getDb().getTempMax());
-					table.addCell(Float.toString(controller.getPasteurization().getTempMaxima())+controller.getDb().getDegreesCelsius());
-					table.addCell(controller.getDb().getTempFinal());
-					table.addCell(Float.toString(controller.getPasteurization().getTempFinal())+controller.getDb().getDegreesCelsius());
-					table.addCell(controller.getDb().getTempCorte());
-					table.addCell(Float.toString(controller.getPasteurization().getTempCorte())+controller.getDb().getDegreesCelsius());
-					table.addCell(controller.getDb().getTiempTotal());
-					table.addCell(controller.getPasteurization().getTiempTotal().toString());
-					table.addCell(controller.getDb().getTiempUp());
-					table.addCell(controller.getPasteurization().getTiempUP().toString());
-					table.addCell(controller.getDb().getUp());
-					table.addCell(Float.toString(controller.getPasteurization().getUp()));				
-					document.add(table);
-					
-					PdfContentByte cb = writer.getDirectContent();
-					PdfTemplate tp = cb.createTemplate(1000, 707);
-					Graphics2D g2d = tp.createGraphics(800, 600,
-					new DefaultFontMapper());
-					Rectangle2D r2d = new Rectangle2D.Double(200, 150, 600, 400);
-					chart.draw(g2d, r2d);
-					g2d.dispose();
-					cb.addTemplate(tp, 0, 0);
-				} catch(Exception ex) {
-					ex.printStackTrace();
+				String[] columns = { "Tiempo" , "Temperatura" };
+				List<FilaExcel> filas = new ArrayList<FilaExcel>();
+				List<LocalTime> tiempos = controller.getDb().getPasteurization().getTiempos();
+				List<Float> temperaturas = controller.getDb().getPasteurization().getTemperaturas();
+				int i = 0;
+				for(Float temperatura : temperaturas) {
+					FilaExcel fila = new FilaExcel(temperatura,tiempos.get(i));
+					filas.add(fila);
+					i++;
 				}
-				document.close();
+				Workbook workbook = new XSSFWorkbook();
+				Sheet sheet = workbook.createSheet("Mediciones");
+				org.apache.poi.ss.usermodel.Font headerFont = workbook.createFont();
+				headerFont.setBold(true);
+				headerFont.setFontHeightInPoints((short)17);
+				headerFont.setColor(IndexedColors.BLUE.getIndex());
+				
+				CellStyle headerCellStyle = workbook.createCellStyle();
+				headerCellStyle.setFont(headerFont);
+				
+				Row heeaderRow = sheet.createRow(0);
+				
+				for(int j = 0; j < columns.length ; j++) {
+					Cell cell = heeaderRow.createCell(j);
+					cell.setCellValue(columns[j]);
+					cell.setCellStyle(headerCellStyle);
+				}
+				
+				int rowNum = 0;
+				
+				for(FilaExcel unaFila : filas) {
+					Row row = sheet.createRow(++rowNum);
+					row.createCell(0).setCellValue((unaFila.getTiempo().toString()));
+					row.createCell(1).setCellValue(unaFila.getTemperatura());
+				}
+				
+				for(int k = 0; k < columns.length ; k++) {
+					sheet.autoSizeColumn(k);
+				}
+				try {
+					workbook.close();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
-		exportarMenuItem.add(medicionesXlsMenuItem);
-		exportarMenuItem.add(reporteMenuItem);
-		menuBar.getMenu(0).add(exportarMenuItem);
+		JMenuItem reporteMenuItem = new JMenuItem("Reporte");
+		reporteMenuItem.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			JFreeChart chart = controller.getChart().getChart();
+			Document document = new Document (new Rectangle(1000,707));
+			try {
+				PdfWriter writer;
+				writer = PdfWriter.getInstance(document,
+				new FileOutputStream("TestingPDF.pdf"));
+				document.open();
+				
+		        Font fontbold = FontFactory.getFont("Arial", 40, Font.BOLD);
+		        Paragraph p = new Paragraph("Reporte pasteurización", fontbold);
+		        p.setSpacingAfter(20);
+		        p.setAlignment(1); // Center
+		        document.add(p);
+				
+				PdfPTable table = new PdfPTable(2);
+//					PdfPCell cell = new PdfPCell(new Paragraph("Resultados"));
+				PdfPCell cell = new PdfPCell();
+				cell.setColspan(2);
+				table.addCell(cell);
+				table.addCell(controller.getDb().getTempInicial());
+				table.addCell(Float.toString(controller.getPasteurization().getTempInicial())+controller.getDb().getDegreesCelsius());
+				table.addCell(controller.getDb().getTempMax());
+				table.addCell(Float.toString(controller.getPasteurization().getTempMaxima())+controller.getDb().getDegreesCelsius());
+				table.addCell(controller.getDb().getTempFinal());
+				table.addCell(Float.toString(controller.getPasteurization().getTempFinal())+controller.getDb().getDegreesCelsius());
+				table.addCell(controller.getDb().getTempCorte());
+				table.addCell(Float.toString(controller.getPasteurization().getTempCorte())+controller.getDb().getDegreesCelsius());
+				table.addCell(controller.getDb().getTiempTotal());
+				table.addCell(controller.getPasteurization().getTiempTotal().toString());
+				table.addCell(controller.getDb().getTiempUp());
+				table.addCell(controller.getPasteurization().getTiempUP().toString());
+				table.addCell(controller.getDb().getUp());
+				table.addCell(Float.toString(controller.getPasteurization().getUp()));				
+				document.add(table);
+				
+				PdfContentByte cb = writer.getDirectContent();
+				PdfTemplate tp = cb.createTemplate(1000, 707);
+				Graphics2D g2d = tp.createGraphics(800, 600,
+				new DefaultFontMapper());
+				Rectangle2D r2d = new Rectangle2D.Double(200, 150, 600, 400);
+				chart.draw(g2d, r2d);
+				g2d.dispose();
+				cb.addTemplate(tp, 0, 0);
+			} catch(Exception ex) {
+				ex.printStackTrace();
+			}
+			document.close();
+		}
+	});
+	exportarMenuItem.add(medicionesXlsMenuItem);
+	exportarMenuItem.add(reporteMenuItem);
+	menuBar.getMenu(0).add(exportarMenuItem);
 	}
 
 	private JMenuBar createMenuBar() {
