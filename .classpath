@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="C:/Users/Mike/workspace2/PrometeoUPMDesktop/src/itextpdf-5.4.5.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Mike/workspace2/PrometeoUPMDesktop/src/poi-ooxml-3.9.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Mike/workspace2/PrometeoUPMDesktop/src/poi-5.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Mike/workspace2/PrometeoUPMDesktop/src/xmlbeans-5.0.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
