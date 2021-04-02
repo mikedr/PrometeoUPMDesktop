@@ -8,9 +8,6 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -20,13 +17,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jfree.chart.JFreeChart;
 
 import com.itextpdf.awt.DefaultFontMapper;
@@ -42,7 +32,6 @@ import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import controller.Controller;
-import model.FilaExcel;
 import model.Pasteurization;
 
 public class MainFrame extends JFrame {
@@ -71,54 +60,6 @@ public class MainFrame extends JFrame {
 	private void addExportarMenuItem() {
 		JMenu exportarMenuItem = new JMenu("Exportar resultados");
 		JMenuItem medicionesXlsMenuItem = new JMenuItem("Mediciones");
-		medicionesXlsMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String[] columns = { "Tiempo" , "Temperatura" };
-				List<FilaExcel> filas = new ArrayList<FilaExcel>();
-				List<LocalTime> tiempos = controller.getDb().getPasteurization().getTiempos();
-				List<Float> temperaturas = controller.getDb().getPasteurization().getTemperaturas();
-				int i = 0;
-				for(Float temperatura : temperaturas) {
-					FilaExcel fila = new FilaExcel(temperatura,tiempos.get(i));
-					filas.add(fila);
-					i++;
-				}
-				Workbook workbook = new XSSFWorkbook();
-				Sheet sheet = workbook.createSheet("Mediciones");
-				org.apache.poi.ss.usermodel.Font headerFont = workbook.createFont();
-				headerFont.setBold(true);
-				headerFont.setFontHeightInPoints((short)17);
-				headerFont.setColor(IndexedColors.BLUE.getIndex());
-				
-				CellStyle headerCellStyle = workbook.createCellStyle();
-				headerCellStyle.setFont(headerFont);
-				
-				Row heeaderRow = sheet.createRow(0);
-				
-				for(int j = 0; j < columns.length ; j++) {
-					Cell cell = heeaderRow.createCell(j);
-					cell.setCellValue(columns[j]);
-					cell.setCellStyle(headerCellStyle);
-				}
-				
-				int rowNum = 0;
-				
-				for(FilaExcel unaFila : filas) {
-					Row row = sheet.createRow(++rowNum);
-					row.createCell(0).setCellValue((unaFila.getTiempo().toString()));
-					row.createCell(1).setCellValue(unaFila.getTemperatura());
-				}
-				
-				for(int k = 0; k < columns.length ; k++) {
-					sheet.autoSizeColumn(k);
-				}
-				try {
-					workbook.close();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
 		JMenuItem reporteMenuItem = new JMenuItem("Reporte");
 		reporteMenuItem.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
