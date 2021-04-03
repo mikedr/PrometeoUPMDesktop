@@ -8,6 +8,8 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -17,6 +19,13 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jfree.chart.JFreeChart;
 
 import com.itextpdf.awt.DefaultFontMapper;
@@ -32,6 +41,7 @@ import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import controller.Controller;
+import model.Measurement;
 import model.Pasteurization;
 
 public class MainFrame extends JFrame {
@@ -61,6 +71,31 @@ public class MainFrame extends JFrame {
 		JMenu exportarMenuItem = new JMenu("Exportar resultados");
 		JMenuItem medicionesXlsMenuItem = new JMenuItem("Mediciones");
 		JMenuItem reporteMenuItem = new JMenuItem("Reporte");
+		medicionesXlsMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+		        XSSFWorkbook workbook = new XSSFWorkbook();
+		        XSSFSheet sheet = workbook.createSheet("Java Books");
+			    int rowCount = 0;
+			    Row row = sheet.createRow(rowCount);
+			    Cell cell = row.createCell(1);
+			    cell.setCellValue("Tiempo");
+			    cell = row.createCell(2);
+			    cell.setCellValue("Temperatura");
+			    List<Measurement> measurements = new ArrayList<Measurement>();
+			    measurements = controller.getMeasurements();
+			    for (Measurement aMeasurement : measurements) {
+			        row = sheet.createRow(++rowCount);
+			        writeBook(aMeasurement, row);
+			    }
+			    try {
+				    String excelFilePath = "Mediciones.xlsx";
+				    FileOutputStream outputStream = new FileOutputStream(excelFilePath);
+				    workbook.write(outputStream);				    	
+			    } catch (Exception ex) {
+			    	ex.printStackTrace();
+			    }
+			}
+		});
 		reporteMenuItem.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			JFreeChart chart = controller.getChart().getChart();
@@ -115,6 +150,14 @@ public class MainFrame extends JFrame {
 	exportarMenuItem.add(medicionesXlsMenuItem);
 	exportarMenuItem.add(reporteMenuItem);
 	menuBar.getMenu(0).add(exportarMenuItem);
+	}
+	
+	private void writeBook(Measurement aMeasurement, Row row) {
+	    Cell cell = row.createCell(1);
+	    cell.setCellValue(aMeasurement.getTiempo().toString());
+	 
+	    cell = row.createCell(2);
+	    cell.setCellValue(aMeasurement.getTemperatura());
 	}
 
 	private JMenuBar createMenuBar() {

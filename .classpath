@@ -5,5 +5,21 @@
 	<classpathentry kind="lib" path="lib/itextpdf-5.5.13.1.jar"/>
 	<classpathentry kind="lib" path="lib/jcommon-1.0.0.jar"/>
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/poi-5.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/poi-ooxml-5.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/poi-examples-5.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/poi-excelant-5.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/poi-integration-5.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/poi-ooxml-full-5.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/poi-ooxml-lite-5.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/poi-scratchpad-5.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/commons-collections4-4.4-sources.jar"/>
+	<classpathentry kind="lib" path="lib/commons-collections4-4.4.jar"/>
+	<classpathentry kind="lib" path="lib/xmlbeans-5.0.0-sources.jar"/>
+	<classpathentry kind="lib" path="lib/xmlbeans-5.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/commons-compress-1.20-sources.jar"/>
+	<classpathentry kind="lib" path="lib/commons-compress-1.20.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-api-2.14.1.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-core-2.14.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
