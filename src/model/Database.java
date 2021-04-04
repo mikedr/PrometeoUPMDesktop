@@ -1,7 +1,11 @@
 package model;
 
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalTime;
@@ -10,7 +14,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jfree.chart.JFreeChart;
+
+import com.itextpdf.awt.DefaultFontMapper;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfTemplate;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import gui.Chart;
 
@@ -135,4 +156,90 @@ public class Database {
 			return timeToSanitize;
 		}
 	 }
+
+	public void generateReporte(File selectedFile) {
+		JFreeChart chart = getChart().getChart();
+		Document document = new Document (new Rectangle(1000,707));
+		PdfWriter writer = null;
+		try {
+			writer = PdfWriter.getInstance(document,
+			new FileOutputStream(selectedFile));
+		} catch (FileNotFoundException | DocumentException e1) {
+			e1.printStackTrace();
+		}
+		document.open();
+        Font fontbold = FontFactory.getFont("Arial", 40, Font.BOLD);
+        Paragraph p = new Paragraph("Reporte pasteurización", fontbold);
+        p.setSpacingAfter(20);
+        p.setAlignment(1); // Center
+        try {
+			document.add(p);
+		} catch (DocumentException e1) {
+			e1.printStackTrace();
+		}
+		PdfPTable table = new PdfPTable(2);
+//			PdfPCell cell = new PdfPCell(new Paragraph("Resultados"));
+		PdfPCell cell = new PdfPCell();
+		cell.setColspan(2);
+		table.addCell(cell);
+		table.addCell(getTempInicial());
+		table.addCell(Float.toString(getPasteurization().getTempInicial())+getDegreesCelsius());
+		table.addCell(getTempMax());
+		table.addCell(Float.toString(getPasteurization().getTempMaxima())+getDegreesCelsius());
+		table.addCell(getTempFinal());
+		table.addCell(Float.toString(getPasteurization().getTempFinal())+getDegreesCelsius());
+		table.addCell(getTempCorte());
+		table.addCell(Float.toString(getPasteurization().getTempCorte())+getDegreesCelsius());
+		table.addCell(getTiempTotal());
+		table.addCell(getPasteurization().getTiempTotal().toString());
+		table.addCell(getTiempUp());
+		table.addCell(getPasteurization().getTiempUP().toString());
+		table.addCell(getUp());
+		table.addCell(Float.toString(getPasteurization().getUp()));				
+		try {
+			document.add(table);
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		}
+		PdfContentByte cb = writer.getDirectContent();
+		PdfTemplate tp = cb.createTemplate(1000, 707);
+		Graphics2D g2d = tp.createGraphics(800, 600,
+		new DefaultFontMapper());
+		Rectangle2D r2d = new Rectangle2D.Double(200, 150, 600, 400);
+		chart.draw(g2d, r2d);
+		g2d.dispose();
+		cb.addTemplate(tp, 0, 0);
+		document.close();
+	}
+
+	public void generateMediciones(File selectedFile) {
+		XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet("Mediciones");
+	    int rowCount = 0;
+	    Row row = sheet.createRow(rowCount);
+	    Cell cell = row.createCell(1);
+	    cell.setCellValue("Tiempo");
+	    cell = row.createCell(2);
+	    cell.setCellValue("Temperatura");
+	    List<Measurement> measurements = new ArrayList<Measurement>();
+	    measurements = getMeasurements();
+	    for (Measurement aMeasurement : measurements) {
+	        row = sheet.createRow(++rowCount);
+	        writeBook(aMeasurement, row);
+	    }
+	    try {
+		    FileOutputStream outputStream = new FileOutputStream(selectedFile);
+		    workbook.write(outputStream);				    	
+	    } catch (Exception ex) {
+	    	ex.printStackTrace();
+	    }		
+	}
+	
+	private void writeBook(Measurement aMeasurement, Row row) {
+	    Cell cell = row.createCell(1);
+	    cell.setCellValue(aMeasurement.getTiempo().toString());
+	 
+	    cell = row.createCell(2);
+	    cell.setCellValue(aMeasurement.getTemperatura());
+	}
 }

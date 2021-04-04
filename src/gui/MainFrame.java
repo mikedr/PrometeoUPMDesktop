@@ -72,87 +72,26 @@ public class MainFrame extends JFrame {
 		JMenuItem reporteMenuItem = new JMenuItem("Reporte");
 		medicionesXlsMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//			    String excelFilePath = "Mediciones.xlsx";
-				fileChooser = new JFileChooser();
-				fileChooser.setSelectedFile(new File("Mediciones.xlsx"));
-				if(fileChooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
-					try {
-						
-					} catch (Exception e1) {
-						JOptionPane.showMessageDialog(MainFrame.this, "Couldnt not load data from file","Error",JOptionPane.ERROR_MESSAGE);
-					}					
+				try {
+					fileChooser = new JFileChooser();
+					fileChooser.setSelectedFile(new File("Mediciones.xlsx"));
+					fileChooser.showSaveDialog(MainFrame.this);
+					controller.generateMediciones(fileChooser.getSelectedFile());
+				} catch(Exception ex) {
+					ex.printStackTrace();
 				}
-		        XSSFWorkbook workbook = new XSSFWorkbook();
-		        XSSFSheet sheet = workbook.createSheet("Mediciones");
-			    int rowCount = 0;
-			    Row row = sheet.createRow(rowCount);
-			    Cell cell = row.createCell(1);
-			    cell.setCellValue("Tiempo");
-			    cell = row.createCell(2);
-			    cell.setCellValue("Temperatura");
-			    List<Measurement> measurements = new ArrayList<Measurement>();
-			    measurements = controller.getMeasurements();
-			    for (Measurement aMeasurement : measurements) {
-			        row = sheet.createRow(++rowCount);
-			        writeBook(aMeasurement, row);
-			    }
-			    try {
-				    FileOutputStream outputStream = new FileOutputStream(fileChooser.getSelectedFile());
-				    workbook.write(outputStream);				    	
-			    } catch (Exception ex) {
-			    	ex.printStackTrace();
-			    }
 			}
 		});
 		reporteMenuItem.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			JFreeChart chart = controller.getChart().getChart();
-			Document document = new Document (new Rectangle(1000,707));
 			try {
-				PdfWriter writer;
-				writer = PdfWriter.getInstance(document,
-				new FileOutputStream("TestingPDF.pdf"));
-				document.open();
-				
-		        Font fontbold = FontFactory.getFont("Arial", 40, Font.BOLD);
-		        Paragraph p = new Paragraph("Reporte pasteurización", fontbold);
-		        p.setSpacingAfter(20);
-		        p.setAlignment(1); // Center
-		        document.add(p);
-				
-				PdfPTable table = new PdfPTable(2);
-//					PdfPCell cell = new PdfPCell(new Paragraph("Resultados"));
-				PdfPCell cell = new PdfPCell();
-				cell.setColspan(2);
-				table.addCell(cell);
-				table.addCell(controller.getDb().getTempInicial());
-				table.addCell(Float.toString(controller.getPasteurization().getTempInicial())+controller.getDb().getDegreesCelsius());
-				table.addCell(controller.getDb().getTempMax());
-				table.addCell(Float.toString(controller.getPasteurization().getTempMaxima())+controller.getDb().getDegreesCelsius());
-				table.addCell(controller.getDb().getTempFinal());
-				table.addCell(Float.toString(controller.getPasteurization().getTempFinal())+controller.getDb().getDegreesCelsius());
-				table.addCell(controller.getDb().getTempCorte());
-				table.addCell(Float.toString(controller.getPasteurization().getTempCorte())+controller.getDb().getDegreesCelsius());
-				table.addCell(controller.getDb().getTiempTotal());
-				table.addCell(controller.getPasteurization().getTiempTotal().toString());
-				table.addCell(controller.getDb().getTiempUp());
-				table.addCell(controller.getPasteurization().getTiempUP().toString());
-				table.addCell(controller.getDb().getUp());
-				table.addCell(Float.toString(controller.getPasteurization().getUp()));				
-				document.add(table);
-				
-				PdfContentByte cb = writer.getDirectContent();
-				PdfTemplate tp = cb.createTemplate(1000, 707);
-				Graphics2D g2d = tp.createGraphics(800, 600,
-				new DefaultFontMapper());
-				Rectangle2D r2d = new Rectangle2D.Double(200, 150, 600, 400);
-				chart.draw(g2d, r2d);
-				g2d.dispose();
-				cb.addTemplate(tp, 0, 0);
+				fileChooser = new JFileChooser();
+				fileChooser.setSelectedFile(new File("TestingPDF.pdf"));
+				fileChooser.showSaveDialog(MainFrame.this);
+				controller.generateReporte(fileChooser.getSelectedFile());
 			} catch(Exception ex) {
 				ex.printStackTrace();
 			}
-			document.close();
 		}
 	});
 	exportarMenuItem.add(medicionesXlsMenuItem);
@@ -160,14 +99,6 @@ public class MainFrame extends JFrame {
 	menuBar.getMenu(0).add(exportarMenuItem);
 	}
 	
-	private void writeBook(Measurement aMeasurement, Row row) {
-	    Cell cell = row.createCell(1);
-	    cell.setCellValue(aMeasurement.getTiempo().toString());
-	 
-	    cell = row.createCell(2);
-	    cell.setCellValue(aMeasurement.getTemperatura());
-	}
-
 	private JMenuBar createMenuBar() {
 		menuBar = new JMenuBar();
 		

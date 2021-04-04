@@ -42,4 +42,12 @@ public class Controller {
 	public void computeUP(Float temperaturaDeCorte) {
 		db.getPasteurization().computePasteurization(temperaturaDeCorte);
 	}
+
+	public void generateReporte(File selectedFile) {
+		db.generateReporte(selectedFile);		
+	}
+
+	public void generateMediciones(File selectedFile) {
+		db.generateMediciones(selectedFile);
+	}
 }
