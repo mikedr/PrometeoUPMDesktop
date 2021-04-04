@@ -3,7 +3,7 @@ import java.io.File;
 
 import javax.swing.filechooser.FileFilter;
 
-public class MedicionFileFilter extends FileFilter{
+public class MedicionesSaveFileFilter extends FileFilter{
 
 	@Override
 	public boolean accept(File file) {
@@ -27,7 +27,7 @@ public class MedicionFileFilter extends FileFilter{
 
 	@Override
 	public String getDescription() {
-		return "Archivo de mediciones (*.adm)";
+		return "Mediciones.xlsx";
 	}
 
 }

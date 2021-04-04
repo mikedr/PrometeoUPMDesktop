@@ -6,10 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -19,11 +21,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jfree.chart.JFreeChart;
@@ -73,8 +72,18 @@ public class MainFrame extends JFrame {
 		JMenuItem reporteMenuItem = new JMenuItem("Reporte");
 		medicionesXlsMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+//			    String excelFilePath = "Mediciones.xlsx";
+				fileChooser = new JFileChooser();
+				fileChooser.setSelectedFile(new File("Mediciones.xlsx"));
+				if(fileChooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+					try {
+						
+					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(MainFrame.this, "Couldnt not load data from file","Error",JOptionPane.ERROR_MESSAGE);
+					}					
+				}
 		        XSSFWorkbook workbook = new XSSFWorkbook();
-		        XSSFSheet sheet = workbook.createSheet("Java Books");
+		        XSSFSheet sheet = workbook.createSheet("Mediciones");
 			    int rowCount = 0;
 			    Row row = sheet.createRow(rowCount);
 			    Cell cell = row.createCell(1);
@@ -88,8 +97,7 @@ public class MainFrame extends JFrame {
 			        writeBook(aMeasurement, row);
 			    }
 			    try {
-				    String excelFilePath = "Mediciones.xlsx";
-				    FileOutputStream outputStream = new FileOutputStream(excelFilePath);
+				    FileOutputStream outputStream = new FileOutputStream(fileChooser.getSelectedFile());
 				    workbook.write(outputStream);				    	
 			    } catch (Exception ex) {
 			    	ex.printStackTrace();
@@ -187,6 +195,7 @@ public class MainFrame extends JFrame {
 
 		importarMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				fileChooser.addChoosableFileFilter(new MedicionesLoadFileFilter());
 				if(fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
 					try {
 						controller.loadFromFile(fileChooser.getSelectedFile());
@@ -197,6 +206,9 @@ public class MainFrame extends JFrame {
 						chartPanel.revalidate();
 						chartPanel.repaint();
 						chartPanel.createChartTemp(controller.getMeasurements());
+					}
+					catch (NoSuchElementException ex) {
+						JOptionPane.showMessageDialog(MainFrame.this, "El archivo seleccionado es incorrecto","Error",JOptionPane.ERROR_MESSAGE);	
 					} catch (IOException e1) {
 						JOptionPane.showMessageDialog(MainFrame.this, "Couldnt not load data from file","Error",JOptionPane.ERROR_MESSAGE);
 					}					
@@ -242,7 +254,6 @@ public class MainFrame extends JFrame {
 			
 		});
 		fileChooser = new JFileChooser();
-		fileChooser.addChoosableFileFilter(new MedicionFileFilter());
 		tablePanel = new TablePanel();
 		tablePanel.setData(controller.getMeasurements());
 	}
