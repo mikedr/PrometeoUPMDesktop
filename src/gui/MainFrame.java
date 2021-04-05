@@ -15,6 +15,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 
 import controller.Controller;
 import model.Pasteurization;
@@ -95,6 +96,15 @@ public class MainFrame extends JFrame {
 		aplicacionMenu.add(salirMenuItem);
 
 		JMenuItem gestionarMenuItem = new JMenuItem("Gestionar");
+		gestionarMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SwingUtilities.invokeLater(new Runnable() {
+					public void run() {
+						new Dispositivo(getSize());
+					}
+				});				
+			}
+		});
 		dispositivoMenu.add(gestionarMenuItem);
 
 		salirMenuItem.setMnemonic(KeyEvent.VK_I);
