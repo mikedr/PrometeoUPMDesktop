@@ -50,4 +50,8 @@ public class Controller {
 	public void generateMediciones(File selectedFile) {
 		db.generateMediciones(selectedFile);
 	}
+
+	public void startSerialConnection() {
+		
+	}
 }
