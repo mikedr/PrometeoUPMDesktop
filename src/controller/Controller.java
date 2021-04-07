@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.time.LocalTime;
 import java.util.List;
 
+import controller.serialConnection.ManagerSerialComm;
 import gui.Chart;
 import model.Database;
 import model.Measurement;
@@ -13,6 +14,7 @@ import model.Pasteurization;
 public class Controller {
 	
 	private Database db = new Database();
+	private ManagerSerialComm managerSerialComm = new ManagerSerialComm();
 	
 	public void addMeasurement(LocalTime tiempo, Float temperatura) {
 		Measurement measurement = new Measurement(tiempo, temperatura);
@@ -52,6 +54,6 @@ public class Controller {
 	}
 
 	public void startSerialConnection() {
-		
+		managerSerialComm.setConection();
 	}
 }
