@@ -53,7 +53,7 @@ public class Controller {
 		db.generateMediciones(selectedFile);
 	}
 
-	public void startSerialConnection() {
-		managerSerialComm.setConection();
+	public boolean startSerialConnection() {
+		return managerSerialComm.setConection();
 	}
 }

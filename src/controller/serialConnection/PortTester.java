@@ -19,18 +19,18 @@ public class PortTester implements Runnable, SerialPortEventListener{
 	private InputStream is = null;
 	private PrintStream os = null;
 	private SerialPort port;
-	private boolean detected = false;
 	private CommPortIdentifier portId;
+	ManagerSerialComm managerSerialComm;
 	private static final String PACKET_ARE = "ARE";
 	private static final String PACKET_IAM = "IAM";
 	private static final String PORT = "puerto";
 	private static final String MESSAGE_BUSY_PORT = "Se encuentra ocupado el puerto ";
 	private static final String MESSAGE_WAITING_ANSWER = ". Esperando respuesta. Intento: ";
-	private static final int BAUD_RATE = 115200, WAIT = 5;
-	private static int COUNT = 1;
+	private static final int BAUD_RATE = 115200;
 	
-	public PortTester(CommPortIdentifier portId) {
+	public PortTester(CommPortIdentifier portId, ManagerSerialComm managerSerialComm) {
 		this.portId = portId;
+		this.managerSerialComm = managerSerialComm;
 	}
 
 	@Override
@@ -45,11 +45,6 @@ public class PortTester implements Runnable, SerialPortEventListener{
 			port.notifyOnDataAvailable(true);
 			port.notifyOnOutputEmpty(true);
 			os.print(PACKET_ARE+"\n");
-			while(!detected && COUNT<=WAIT) {
-				System.out.println(portName+MESSAGE_WAITING_ANSWER+COUNT+"/"+WAIT);
-				Thread.sleep(1000);
-				COUNT++;
-			}
 		} catch (PortInUseException e) {
 			System.out.println(MESSAGE_BUSY_PORT+portName);
 		} catch (Exception e) {
@@ -83,7 +78,7 @@ public class PortTester implements Runnable, SerialPortEventListener{
 	        	    }
 	        	    recibido = textBuilder.substring(0,3);
 	        	    if(PACKET_IAM.equals(recibido)) {
-	        	    	detected = true;
+	        	    	managerSerialComm.setDeviceConnected(portId);
 	        	    }
         	    } catch (IOException e) {
         	    	
