@@ -1,8 +1,12 @@
 package controller.serialConnection;
 
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Enumeration;
+import java.util.TooManyListenersException;
 
 import javax.comm.CommPortIdentifier;
+import javax.comm.SerialPort;
 
 public class ManagerSerialComm {
 	
@@ -10,6 +14,8 @@ public class ManagerSerialComm {
 	private Enumeration ports;
 	private static final String MESSAGE_START_TEST_PORT = "Abrimos hilo para testear puerto ";
 	private boolean isDeviceConnected;
+	SerialPort port;
+	ReaderMediciones readerMediciones;
 	
 	public boolean setConection() {
 		isDeviceConnected = false;
@@ -28,8 +34,23 @@ public class ManagerSerialComm {
         return isDeviceConnected;
 	}
 	
-	void setDeviceConnected(CommPortIdentifier portId) {
+	void setDeviceConnected(SerialPort port) {
 		isDeviceConnected = true;
-		this.portId = portId;
+		this.port = port;
+	}
+
+	public void readMediciones() {
+		try {
+			port.removeEventListener();
+			this.readerMediciones = 
+					new ReaderMediciones(new PrintStream(port.getOutputStream(), true), port.getInputStream());
+			try {
+				port.addEventListener(readerMediciones);
+			} catch (TooManyListenersException e) {
+				e.printStackTrace();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

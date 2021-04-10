@@ -78,7 +78,7 @@ public class PortTester implements Runnable, SerialPortEventListener{
 	        	    }
 	        	    recibido = textBuilder.substring(0,3);
 	        	    if(PACKET_IAM.equals(recibido)) {
-	        	    	managerSerialComm.setDeviceConnected(portId);
+	        	    	managerSerialComm.setDeviceConnected(port);
 	        	    }
         	    } catch (IOException e) {
         	    	

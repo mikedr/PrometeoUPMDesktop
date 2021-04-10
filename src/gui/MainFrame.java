@@ -98,12 +98,15 @@ public class MainFrame extends JFrame {
 		JMenuItem gestionarMenuItem = new JMenuItem("Gestionar");
 		gestionarMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SwingUtilities.invokeLater(new Runnable() {
-					public void run() {
-						System.out.println(controller.startSerialConnection());
-						new Dispositivo(getSize());
-					}
-				});				
+				if(controller.startSerialConnection()) {
+					SwingUtilities.invokeLater(new Runnable() {
+						public void run() {
+							new Dispositivo(getSize(),controller);
+						}
+					});						
+				} else {
+					JOptionPane.showMessageDialog(MainFrame.this, "No se detectó conectado el dispositivo","Error",JOptionPane.ERROR_MESSAGE);	
+				}
 			}
 		});
 		dispositivoMenu.add(gestionarMenuItem);

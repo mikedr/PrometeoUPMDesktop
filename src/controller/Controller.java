@@ -56,4 +56,8 @@ public class Controller {
 	public boolean startSerialConnection() {
 		return managerSerialComm.setConection();
 	}
+	
+	public void readMediciones() {
+		managerSerialComm.readMediciones();
+	}
 }

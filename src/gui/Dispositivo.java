@@ -14,15 +14,22 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import controller.Controller;
+
 public class Dispositivo extends JFrame implements ActionListener{
 	private JButton btnLeerDispositivo;
 	private JButton btnIniciarDispositivo;
 	private Dimension parentDimension;
 	private JComboBox comboSincronismo;
 	private JLabel labelSincronismo;
-	public Dispositivo(Dimension parentDimension) {
+	private Controller controller;
+	
+	private static final String TAG_LEER_MEDICIONES = "Leer mediciones";
+	
+	public Dispositivo(Dimension parentDimension, Controller controller) {
 		super("Dispositvo");
 		this.parentDimension = parentDimension;
+		this.controller = controller;
 		setup();
 		instaciateComponents();
 		addComponents();
@@ -99,7 +106,7 @@ public class Dispositivo extends JFrame implements ActionListener{
 	}
 
 	private void instaciateComponents() {
-		btnLeerDispositivo = new JButton("Leer mediciones");
+		btnLeerDispositivo = new JButton(TAG_LEER_MEDICIONES);
 		btnLeerDispositivo.setPreferredSize(btnLeerDispositivo.getPreferredSize());
 		btnLeerDispositivo.addActionListener(this);
 		comboSincronismo = new JComboBox();
@@ -134,7 +141,12 @@ public class Dispositivo extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
+		int s;
+		s=0;
+		if ((arg0.getSource() instanceof JButton) && 
+				TAG_LEER_MEDICIONES.equals(arg0.getActionCommand())) {
+			controller.readMediciones();
+		}
 		
 	}
 }
