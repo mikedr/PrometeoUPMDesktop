@@ -58,6 +58,6 @@ public class Controller {
 	}
 	
 	public void readMediciones() {
-		managerSerialComm.readMediciones();
+		managerSerialComm.sendPacketToDevice("READ");
 	}
 }

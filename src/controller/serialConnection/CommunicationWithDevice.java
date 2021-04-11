@@ -9,20 +9,45 @@ import java.io.PrintStream;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.TooManyListenersException;
 
+import javax.comm.CommPortIdentifier;
+import javax.comm.PortInUseException;
+import javax.comm.SerialPort;
 import javax.comm.SerialPortEvent;
 import javax.comm.SerialPortEventListener;
 
-public class ReaderMediciones implements SerialPortEventListener{
+public class CommunicationWithDevice implements SerialPortEventListener{
 
-	PrintStream printStream;
-	InputStream inputStream;
+	private SerialPort port;
+	private PrintStream outputStream;
+	private InputStream inputStream;
+	private CommPortIdentifier portId;
+	private static final int BAUD_RATE = 115200;
+	private static final String PORT = "puerto";
+	private static final String MESSAGE_BUSY_PORT = "Se encuentra ocupado el puerto ";
 	
-	public ReaderMediciones(PrintStream printStream, InputStream inputStream) {
-		this.printStream = printStream;
-		this.inputStream = inputStream;
+	public CommunicationWithDevice(CommPortIdentifier portId, SerialPort port) {
+		this.portId = portId;
+		this.port = port;
+		try {
+			this.outputStream = new PrintStream(port.getOutputStream(), true);
+			this.inputStream = port.getInputStream();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
+	public void receiveFromDevice(String packet) {
+		
+	}
+	
+	public void sendToDevice(String packet) {
+		port.notifyOnDataAvailable(true);
+		port.notifyOnOutputEmpty(true);
+		outputStream.print(packet+"\n");			
+	}
+	
 	@Override
 	public void serialEvent(SerialPortEvent event) {
         switch(event.getEventType()) {
