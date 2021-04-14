@@ -23,9 +23,13 @@ public class CommunicationWithDevice implements SerialPortEventListener{
 	private PrintStream outputStream;
 	private InputStream inputStream;
 	private CommPortIdentifier portId;
+	private String lastSentFlag;
 	private static final int BAUD_RATE = 115200;
 	private static final String PORT = "puerto";
 	private static final String MESSAGE_BUSY_PORT = "Se encuentra ocupado el puerto ";
+	private static final String FLAG_ACK = "ACK";
+	private static final String FLAG_INF = "INF";
+	private static final String FLAG_READ = "READ";
 	
 	public CommunicationWithDevice(CommPortIdentifier portId, SerialPort port) {
 		this.portId = portId;
@@ -43,6 +47,7 @@ public class CommunicationWithDevice implements SerialPortEventListener{
 	}
 	
 	public void sendToDevice(String packet) {
+		lastSentFlag = packet;
 		port.notifyOnDataAvailable(true);
 		port.notifyOnOutputEmpty(true);
 		outputStream.print(packet+"\n");			
@@ -77,11 +82,15 @@ public class CommunicationWithDevice implements SerialPortEventListener{
     	    	
     	    }
     	    switch (recibido) {
-    	    	case "INF":
+    	    	case FLAG_INF:
     	    		System.out.println("Se recibió una trama INF");
     	    	break;
-    	    	case "ACK":
-    	    		System.out.println("Se reconoció un paquete");
+    	    	case FLAG_ACK:
+    	    		if (FLAG_READ.equals(lastSentFlag)) {
+    	    			System.out.println("Se reconoció un paquete READ");    	    			
+    	    		} else {
+    	    			System.out.println("Se reconoció un paquete");
+    	    		}
     	    	break;
     	    }
         }
