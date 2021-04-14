@@ -76,6 +76,14 @@ public class CommunicationWithDevice implements SerialPortEventListener{
     	    } catch (IOException e) {
     	    	
     	    }
+    	    switch (recibido) {
+    	    	case "INF":
+    	    		System.out.println("Se recibió una trama INF");
+    	    	break;
+    	    	case "ACK":
+    	    		System.out.println("Se reconoció un paquete");
+    	    	break;
+    	    }
         }
 	}
 }
