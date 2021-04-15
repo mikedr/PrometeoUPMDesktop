@@ -61,37 +61,34 @@ public class CommunicationWithDevice implements SerialPortEventListener{
     	    byte[] readBuffer = new byte[50];
     	    int numBytes;
     	    InputStream is;
-    	    StringBuilder textBuilder;
-    	    String recibido = new String();
+    	    String recibido = new String(), firstReceivedPacket, secondReceivedPacket;
     	    try {
         		while (inputStream.available() > 0) {
         		    numBytes = inputStream.read(readBuffer);
         		}
         		is = new ByteArrayInputStream(readBuffer);
-        	    textBuilder = new StringBuilder();
-        	    try (Reader reader = new BufferedReader(new InputStreamReader
+        	    try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader
         	      (is, Charset.forName(StandardCharsets.UTF_8.name())))) {
-        	        int c = 0;
-        	        while ((c = reader.read()) != -1) {
-        	            textBuilder.append((char) c);
-        	        }
+        	    	firstReceivedPacket = bufferedReader.readLine().toString();
         	    }
-        	    recibido = textBuilder.substring(0,3);
-        	    System.out.println(textBuilder);
-    	    } catch (IOException e) {
-    	    	
-    	    }
-    	    switch (recibido) {
+        	    recibido = firstReceivedPacket.substring(0,3);
+        	    System.out.println(firstReceivedPacket);
+        	    switch (recibido) {
     	    	case FLAG_INF:
     	    		System.out.println("Se recibió una trama INF");
     	    	break;
     	    	case FLAG_ACK:
     	    		if (FLAG_READ.equals(lastSentFlag)) {
+//    	    			newPacket = reader.readLine().toString();
     	    			System.out.println("Se reconoció un paquete READ");    	    			
     	    		} else {
     	    			System.out.println("Se reconoció un paquete");
     	    		}
     	    	break;
+    	    }
+
+    	    } catch (IOException e) {
+    	    	
     	    }
         }
 	}
