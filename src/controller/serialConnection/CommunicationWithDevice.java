@@ -56,40 +56,32 @@ public class CommunicationWithDevice implements SerialPortEventListener{
 	@Override
 	public void serialEvent(SerialPortEvent event) {
         switch(event.getEventType()) {
-
-        case SerialPortEvent.DATA_AVAILABLE:
-    	    byte[] readBuffer = new byte[50];
-    	    int numBytes;
-    	    InputStream is;
-    	    String recibido = new String(), firstReceivedPacket, secondReceivedPacket;
-    	    try {
-        		while (inputStream.available() > 0) {
-        		    numBytes = inputStream.read(readBuffer);
-        		}
-        		is = new ByteArrayInputStream(readBuffer);
-        	    try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader
-        	      (is, Charset.forName(StandardCharsets.UTF_8.name())))) {
-        	    	firstReceivedPacket = bufferedReader.readLine().toString();
-        	    }
-        	    recibido = firstReceivedPacket.substring(0,3);
-        	    System.out.println(firstReceivedPacket);
-        	    switch (recibido) {
-    	    	case FLAG_INF:
-    	    		System.out.println("Se recibió una trama INF");
-    	    	break;
-    	    	case FLAG_ACK:
-    	    		if (FLAG_READ.equals(lastSentFlag)) {
-//    	    			newPacket = reader.readLine().toString();
-    	    			System.out.println("Se reconoció un paquete READ");    	    			
-    	    		} else {
-    	    			System.out.println("Se reconoció un paquete");
-    	    		}
-    	    	break;
-    	    }
-
-    	    } catch (IOException e) {
-    	    	
-    	    }
-        }
+	        case SerialPortEvent.DATA_AVAILABLE:
+	    	    String recibido, firstReceivedPacket, secondReceivedPacket;
+	    	    try {
+	        	    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader
+	        	      (inputStream, Charset.forName(StandardCharsets.UTF_8.name())));
+	        	    	firstReceivedPacket = bufferedReader.readLine().toString();
+	        	    
+	        	    recibido = firstReceivedPacket.substring(0,3);
+	        	    System.out.println(firstReceivedPacket);
+	        	    switch (recibido) {
+	    	    	case FLAG_INF:
+	    	    		System.out.println("Se recibió una trama INF");
+	    	    	break;
+	    	    	case FLAG_ACK:
+	    	    		if (FLAG_READ.equals(lastSentFlag)) {
+	    	    			secondReceivedPacket = bufferedReader.readLine().toString();
+	    	    			System.out.println(secondReceivedPacket);    	    			
+	    	    		} else {
+	    	    			System.out.println("Se reconoció un paquete");
+	    	    		}
+	    	    	break;
+	    	    }
+	
+	    	    } catch (IOException e) {
+	    	    	
+	    	    }
+	        }
 	}
 }
