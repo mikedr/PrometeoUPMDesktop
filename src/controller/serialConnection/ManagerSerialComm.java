@@ -9,8 +9,11 @@ import java.util.TooManyListenersException;
 import javax.comm.CommPortIdentifier;
 import javax.comm.SerialPort;
 
+import controller.Controller;
+
 public class ManagerSerialComm {
 	
+	private Controller controller;
 	private CommPortIdentifier portId;
 	private Enumeration ports;
 	private static final String MESSAGE_START_TEST_PORT = "Abrimos hilo para testear puerto ";
@@ -22,6 +25,10 @@ public class ManagerSerialComm {
 	private InputStream is;
 	private PrintStream os;
 	
+	public ManagerSerialComm(Controller controller) {
+		this.controller = controller;
+	}
+
 	public boolean setConection() {
 		isDeviceConnected = false;
 	    ports  = CommPortIdentifier.getPortIdentifiers();

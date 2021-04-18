@@ -14,7 +14,7 @@ import model.Pasteurization;
 public class Controller {
 	
 	private Database db = new Database();
-	private ManagerSerialComm managerSerialComm = new ManagerSerialComm();
+	private ManagerSerialComm managerSerialComm = new ManagerSerialComm(this);
 	
 	public void addMeasurement(LocalTime tiempo, Float temperatura) {
 		Measurement measurement = new Measurement(tiempo, temperatura);
@@ -59,5 +59,9 @@ public class Controller {
 	
 	public void readMediciones() {
 		managerSerialComm.sendPacketToDevice("READ");
+	}
+	
+	pueblic void createMeasurementsFile() {
+		
 	}
 }
