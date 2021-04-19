@@ -17,6 +17,8 @@ import javax.comm.SerialPort;
 import javax.comm.SerialPortEvent;
 import javax.comm.SerialPortEventListener;
 
+import controller.Controller;
+
 public class CommunicationWithDevice implements SerialPortEventListener{
 
 	private SerialPort port;
@@ -25,6 +27,7 @@ public class CommunicationWithDevice implements SerialPortEventListener{
 	private CommPortIdentifier portId;
 	private String lastSentFlag;
 	private boolean readFromDeviceStarted = false;
+	private Controller controller;
 	public static final int BAUD_RATE = 115200;
 	public static final String PORT = "puerto";
 	public static final String MESSAGE_BUSY_PORT = "Se encuentra ocupado el puerto ";
@@ -32,9 +35,10 @@ public class CommunicationWithDevice implements SerialPortEventListener{
 	public static final String FLAG_INF = "INF";
 	public static final String FLAG_READ = "READ";
 	
-	public CommunicationWithDevice(CommPortIdentifier portId, SerialPort port) {
+	public CommunicationWithDevice(CommPortIdentifier portId, SerialPort port, Controller controller) {
 		this.portId = portId;
 		this.port = port;
+		this.controller = controller;
 		try {
 			this.outputStream = new PrintStream(port.getOutputStream(), true);
 			this.inputStream = port.getInputStream();
@@ -80,6 +84,7 @@ public class CommunicationWithDevice implements SerialPortEventListener{
 	        	    switch (recibido) {
 	    	    	case FLAG_INF:
 	    	    		System.out.println("Se recibió una trama INF");
+	    	    		controller.getDb().addLinesOfMeasurements(firstReceivedPacket);
 	    	    	break;
 	    	    	case FLAG_ACK:
 	    	    		if (FLAG_READ.equals(lastSentFlag)) {

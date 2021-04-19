@@ -50,7 +50,7 @@ public class ManagerSerialComm {
 		port.removeEventListener();
 		isDeviceConnected = true;
 		this.port = port;
-		this.communicator = new CommunicationWithDevice(portId, port);
+		this.communicator = new CommunicationWithDevice(portId, port, controller);
 		try {
 			port.addEventListener(communicator);
 		} catch (TooManyListenersException e) {

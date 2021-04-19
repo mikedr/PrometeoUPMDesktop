@@ -40,6 +40,7 @@ public class Database {
 	private ArrayList<Measurement> measurements;
 	private Pasteurization pasteurization;
 	private Chart chart;
+	private List<String> linesOfMeasurements;
 	private static final String TEMP_INICIAL = "Temperatura inicial";
 	private static final String TEMP_MAX = "Temperatura máxima";
 	private static final String TEMP_FINAL = "Temperatura final";
@@ -104,6 +105,18 @@ public class Database {
 
 	public void setChart(Chart chart) {
 		this.chart = chart;
+	}
+	
+	public List<String> getLinesOfMeasurements() {
+		return linesOfMeasurements;
+	}
+	
+	public void initializeLinesOfMeasurements() {
+		linesOfMeasurements = new ArrayList<String>();
+	}
+	
+	public void addLinesOfMeasurements(String line) {
+		linesOfMeasurements.add(line);
 	}
 
 	public void loadFromFile(File file) throws IOException {

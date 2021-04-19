@@ -59,10 +59,8 @@ public class Controller {
 	}
 	
 	public void readMediciones() {
+		db.initializeLinesOfMeasurements();
 		managerSerialComm.sendPacketToDevice(CommunicationWithDevice.FLAG_READ);
 	}
 	
-	public void createMeasurementsFile() {
-		
-	}
 }
