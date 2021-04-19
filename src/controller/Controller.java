@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.time.LocalTime;
 import java.util.List;
 
+import controller.serialConnection.CommunicationWithDevice;
 import controller.serialConnection.ManagerSerialComm;
 import gui.Chart;
 import model.Database;
@@ -58,10 +59,10 @@ public class Controller {
 	}
 	
 	public void readMediciones() {
-		managerSerialComm.sendPacketToDevice("READ");
+		managerSerialComm.sendPacketToDevice(CommunicationWithDevice.FLAG_READ);
 	}
 	
-	pueblic void createMeasurementsFile() {
+	public void createMeasurementsFile() {
 		
 	}
 }

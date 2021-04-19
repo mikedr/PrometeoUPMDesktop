@@ -24,12 +24,13 @@ public class CommunicationWithDevice implements SerialPortEventListener{
 	private InputStream inputStream;
 	private CommPortIdentifier portId;
 	private String lastSentFlag;
-	private static final int BAUD_RATE = 115200;
-	private static final String PORT = "puerto";
-	private static final String MESSAGE_BUSY_PORT = "Se encuentra ocupado el puerto ";
-	private static final String FLAG_ACK = "ACK";
-	private static final String FLAG_INF = "INF";
-	private static final String FLAG_READ = "READ";
+	private boolean readFromDeviceStarted = false;
+	public static final int BAUD_RATE = 115200;
+	public static final String PORT = "puerto";
+	public static final String MESSAGE_BUSY_PORT = "Se encuentra ocupado el puerto ";
+	public static final String FLAG_ACK = "ACK";
+	public static final String FLAG_INF = "INF";
+	public static final String FLAG_READ = "READ";
 	
 	public CommunicationWithDevice(CommPortIdentifier portId, SerialPort port) {
 		this.portId = portId;
@@ -42,6 +43,14 @@ public class CommunicationWithDevice implements SerialPortEventListener{
 		}
 	}
 
+	public boolean isReadFromDeviceStarted() {
+		return readFromDeviceStarted;
+	}
+
+	public void setReadFromDeviceStarted(boolean readFromDeviceStarted) {
+		this.readFromDeviceStarted = readFromDeviceStarted;
+	}
+
 	public void receiveFromDevice(String packet) {
 		
 	}
@@ -50,6 +59,9 @@ public class CommunicationWithDevice implements SerialPortEventListener{
 		lastSentFlag = packet;
 		port.notifyOnDataAvailable(true);
 		port.notifyOnOutputEmpty(true);
+		if(FLAG_READ.equals(packet)) {
+			setReadFromDeviceStarted(true);
+		}
 		outputStream.print(packet+"\n");			
 	}
 	
